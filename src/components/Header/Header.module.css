@@ -1,0 +1,81 @@
+.Header {
+    border-bottom: solid 0.1px lightgray;
+    box-shadow: 1px 1px 2px #ccc;
+    padding: 20px 0 10px 0;
+}
+
+.Logo {
+    display: block;
+    left: 50%;
+}
+
+.UpperHeader, .SearchBox, .UpperRight, .NavigationBar {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.UpperHeader {
+    justify-content: space-between;
+}
+
+.UpperRight {
+    justify-content: space-between;
+    width: 300px;
+}
+
+.NavigationBar {
+    margin: auto;
+    justify-content: space-evenly;
+    width: 400px;
+    position: relative;
+}
+
+.NavigationBar>span {
+    color: #202124;
+    font-weight: bold;
+}
+
+.SearchBox {
+    height: 35px;
+    height: 35px;
+    border-radius: 17px;
+    border: solid 1px lightgray;
+    padding: 0 10px;
+}
+
+input {
+    border: none;
+}
+
+hr {
+    border: solid 0.5px lightgray;
+}
+
+input:focus {
+    outline-width: 0;
+}
+
+::placeholder {
+    color: #cccccc;
+}
+
+a {
+    text-decoration: none;
+}
+
+button {
+    width: 120px;
+    height: 35px;
+    border-radius: 100px;
+    border: solid 1px #ffa15f;
+    background-color: white;
+    color: #ffa15f;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+button:hover, button:focus {
+    background-color: #ffa15f;
+    color: white;
+}
