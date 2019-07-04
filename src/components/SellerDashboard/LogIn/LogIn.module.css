@@ -1,0 +1,7 @@
+.Background {
+    background-image: url(../../../assets/backgroundImages/SellerLogIn/rectangle-5.png);
+    min-height: 100vh;
+    background-size: cover;
+    background-repeat: no-repeat;
+    padding-top: 50px;
+}

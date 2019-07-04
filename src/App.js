@@ -1,11 +1,16 @@
 import React from 'react';
-import Header from './components/Header/Header';
+import LogIn from './components/SellerDashboard/LogIn/LogIn';
+import DashboardLayout from './components/SellerDashboard/DashboardLayout/DashboardLayout';
+import Badge from './common/components/Badge/Badge';
+import Auxxx from './hoc/Auxxx/Auxxx';
 
 function App() {
     return (
-        <div className="App container">
-            <Header />
-        </div>
+        <Auxxx>
+            <LogIn />
+            <DashboardLayout />
+            <Badge />
+        </Auxxx>
     );
 }
 

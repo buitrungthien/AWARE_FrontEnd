@@ -1,0 +1,21 @@
+.FieldName {
+    text-transform: uppercase;
+    color: #acacac;
+    font-size: 12px;
+    margin-bottom: 5px;
+}
+
+::placeholder {
+    color: #acacac;
+}
+
+.Input {
+    padding: 14px 16px;
+    border-radius: 2px;
+    border: solid 1px #ededed;
+}
+
+.InputBox {
+    display: flex;
+    flex-direction: column;
+}
