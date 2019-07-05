@@ -9,8 +9,8 @@ const modal = (props) => {
         <Auxxx>
             <Backdrop show={props.show} clicked={props.closeModal}/>
             <div className={classes['modal']}>
-                <i onClick={props.closeModal} style={{float: 'right', padding: '10px'}}>
-                    <img src={CloseIcon} alt=""></img>
+                <i style={{float: 'right', padding: '10px'}}>
+                    <img onClick={props.closeModal} src={CloseIcon} alt="" style={{cursor: 'pointer'}}></img>
                 </i>
                 {props.children}
             </div>
