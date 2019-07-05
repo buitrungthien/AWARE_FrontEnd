@@ -32,11 +32,24 @@ class RegisterForm extends React.Component {
         for (let formElementIdentifier in this.state.registerForm) {
             formData[formElementIdentifier] = this.state.registerForm[formElementIdentifier].value;
         }
-        await axios.post('http://localhost:5000/api/users', {...formData});
-        console.log('Registered new user');
-        this.setState({
-            registerForm: CommonConstants.REGISTER_FORM_INIT
-        });
+
+        try {
+            const response = await axios.post('http://localhost:5000/api/users', { ...formData });
+            this.setState({
+                registerForm: CommonConstants.REGISTER_FORM_INIT
+            });
+            console.log(response);
+        } catch (error) {
+            if (error.response) {
+                console.log(error.response.data);
+                console.log(error.response.status);
+            } else if (error.request) {
+                console.log(error.request);
+            } else {
+                console.log('Error', error.message);
+            }
+        }
+
     }
 
 
