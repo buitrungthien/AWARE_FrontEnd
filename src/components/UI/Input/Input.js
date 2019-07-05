@@ -8,17 +8,23 @@ const input = (props) => {
         case ('input'):
             inputElement = <input 
                 className={classes['input-element']} 
-                {...props.elementConfig}/>;
+                {...props.elementConfig}
+                value={props.value}
+                onChange={props.changed}/>;
             break;
         case ('textarea'):
             inputElement = <textarea 
                 className={classes['input-element']} 
-                {...props.elementConfig}/>;
+                {...props.elementConfig}
+                value={props.value}
+                onChange={props.changed}/>;
             break;
         default:
             inputElement = <input 
                 className={classes['input-element']} 
-                {...props.elementConfig}/>;
+                {...props.elementConfig}
+                value={props.value}
+                onChange={props.changed}/>;
     }
 
     return (
