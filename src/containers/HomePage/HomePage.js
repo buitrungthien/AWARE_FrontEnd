@@ -9,7 +9,33 @@ class HomePage extends React.Component {
     state = {
         modalOpen: false,
         typeOfForm: '',
-        validForm: true
+        validForm: true,
+        registerInputs: {
+            name: {
+                elementType: 'input',
+                elementConfig: {
+                    placeholder: "Enter your name...",
+                    type: 'text',
+                },
+                label: 'NAME'
+            },
+            email: {
+                elementType: 'input',
+                elementConfig: { 
+                    placeholder: "Enter your email...",
+                    type: 'text',
+                },
+                label: 'E-MAIL'
+            },
+            password: {
+                elementType: 'input',
+                elementConfig: { 
+                    placeholder: "Enter your password...",
+                    type: 'password',
+                },
+                label: 'PASSWORD'
+            }
+        }
     }
 
     formCloseHandler = () => {
@@ -28,6 +54,7 @@ class HomePage extends React.Component {
     }
 
     render() {
+
         return (
             <Auxxx>
                 <h1>This is the Home Page</h1>
@@ -35,7 +62,11 @@ class HomePage extends React.Component {
                 {
                     this.state.modalOpen ? 
                     <Modal show={this.state.modalOpen} closeModal={this.formCloseHandler}>
-                        {this.state.typeOfForm === CommonConstant.FORM_TYPES.register ? <RegisterForm validForm={this.state.validForm}/> : null}
+                        {
+                            this.state.typeOfForm === CommonConstant.FORM_TYPES.register ? 
+                            <RegisterForm registerInputs={this.state.registerInputs} validForm={this.state.validForm}/> 
+                            : null
+                        }
                     </Modal>
                     : null
                 }
