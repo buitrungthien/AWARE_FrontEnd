@@ -1,14 +1,14 @@
 export const SELLER_DASHBOARD_LEFT_ITEMS = [
-    {name: 'overview'},
-    {name: 'orders'},
-    {name: 'products'},
-    {name: 'payments'},
-    {name: 'promotions'},
-    {name: 'setting'}
+    { name: 'overview' },
+    { name: 'orders' },
+    { name: 'products' },
+    { name: 'payments' },
+    { name: 'promotions' },
+    { name: 'setting' }
 ];
 
-export const FORM_TYPES = [
-    {type: 'register'},
-    {type: 'normal-login'},
-    {type: 'seller-login'}
-];
+export const FORM_TYPES = {
+    register: 'register',
+    normalLogIn: 'normal-login',
+    sellerLogIn: 'seller-login'
+};

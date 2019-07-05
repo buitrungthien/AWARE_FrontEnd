@@ -6,7 +6,7 @@ import Auxxx from '../../../hoc/Auxxx/Auxxx';
 const modal = (props) => {
     return (
         <Auxxx>
-            <Backdrop show={props.show} clicked={props.closeForm}/>
+            <Backdrop show={props.show} clicked={props.closeModal}/>
             <div className={classes['modal']}>
                 {props.children}
             </div>
