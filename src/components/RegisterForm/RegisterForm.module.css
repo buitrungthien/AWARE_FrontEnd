@@ -1,0 +1,29 @@
+.form {
+    box-sizing: border-box;
+    padding: 47px 70px;
+}
+
+.terms-policies {
+    width: 70%;
+    text-align: center;
+    display: block;
+    margin: auto;
+    padding: 22px 0;
+    line-height: 25px;
+}
+
+.orange-underline-bold {
+    color: #ff7413;
+    text-decoration: underline;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.form-title {
+    font-size: 32px;
+    font-weight: bold;
+    color: #202124;
+    display: block;
+    padding-bottom: 20px;
+    text-align: center;
+}

@@ -1,6 +1,6 @@
 import React from 'react';
 import classes from './Badge.module.css';
-import mail from '../../../assets/images/notification/mail.svg';
+// import mail from '../../../assets/images/notification/mail.svg';
 
 class Badge extends React.Component {
 

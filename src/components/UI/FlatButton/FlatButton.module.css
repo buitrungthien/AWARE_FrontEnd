@@ -1,0 +1,17 @@
+.flat-button {
+    color: white;
+    font: inherit;
+    width: 100%;
+    border: none;
+    outline: none;
+    box-sizing: border-box;
+    padding: 12px 24px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.outer-box {
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+}

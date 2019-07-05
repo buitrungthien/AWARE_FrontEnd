@@ -6,3 +6,9 @@ export const SELLER_DASHBOARD_LEFT_ITEMS = [
     {name: 'promotions'},
     {name: 'setting'}
 ];
+
+export const FORM_TYPES = [
+    {type: 'register'},
+    {type: 'normal-login'},
+    {type: 'seller-login'}
+];
