@@ -9,10 +9,16 @@ class RegisterForm extends React.Component {
 
     state = {
         validForm: false,
-        registerForm: CommonConstants.REGISTER_FORM_INIT
+        registerForm: CommonConstants.REGISTER_FORM_INIT,
+        errorMessageFromServer: ''
     }
 
     inputChangedHandler = (event, inputIndentifier) => {
+        if (inputIndentifier === 'email') {
+            this.setState({
+                errorMessageFromServer: ''
+            });
+        }
         const updatedRegisterForm = {
             ...this.state.registerForm
         }
@@ -24,7 +30,6 @@ class RegisterForm extends React.Component {
         updatedFormElement.valid = this.checkValidity(updatedFormElement.value, updatedFormElement.validation).isValid;
         updatedFormElement.errorValidationMessage = this.checkValidity(updatedFormElement.value, updatedFormElement.validation).errorMessage;
         updatedFormElement.touched = true;
-        console.log(updatedFormElement.errorValidationMessage);
         updatedRegisterForm[inputIndentifier] = updatedFormElement;
 
         let formIsValid = true;
@@ -34,7 +39,7 @@ class RegisterForm extends React.Component {
 
         this.setState({
             registerForm: updatedRegisterForm,
-            validForm: formIsValid
+            validForm: formIsValid,
         });
     }
 
@@ -46,13 +51,15 @@ class RegisterForm extends React.Component {
         }
 
         try {
-            const response = await axios.post('http://localhost:5000/api/users', { ...formData });
+            await axios.post('http://localhost:5000/api/users', { ...formData });
             this.setState({
                 registerForm: CommonConstants.REGISTER_FORM_INIT
             });
-            console.log(response);
         } catch (error) {
             if (error.response) {
+                this.setState({
+                    errorMessageFromServer: error.response.data
+                });
                 console.log(error.response.data);
                 console.log(error.response.status);
             } else if (error.request) {
@@ -105,6 +112,7 @@ class RegisterForm extends React.Component {
                 onSubmit={this.registerHandler}
             >
                 <label className={classes['form-title']}>Register</label>
+                {this.state.errorMessageFromServer ? <p className={classes['error-message-from-server']}>{this.state.errorMessageFromServer}</p> : null}
                 {formElementsArray.map(formElement => (
                     <Input
                         key={formElement.id}
@@ -115,7 +123,8 @@ class RegisterForm extends React.Component {
                         inValid={!formElement.config.valid}
                         touched={formElement.config.touched}
                         errorValidationMessage={formElement.config.errorValidationMessage}
-                        changed={(event) => this.inputChangedHandler(event, formElement.id)} />
+                        errorMessageFromServer={this.state.errorMessageFromServer}
+                        changed={(event) => this.inputChangedHandler(event, formElement.id)}/>
                 ))}
                 <span
                     className={classes['terms-policies']}>

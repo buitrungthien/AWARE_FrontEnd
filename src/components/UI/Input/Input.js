@@ -9,7 +9,6 @@ const input = (props) => {
     if (props.inValid && props.touched) {
         inputClasses.push(classes['invalid']);
         errorValidationMessage = <p className={classes['error-validation-message']}>{ props.label }{ props.errorValidationMessage }</p>;
-        console.log(props.errorValidationMessage);
     }
 
     switch (props.elementType) {
