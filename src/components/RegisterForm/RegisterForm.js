@@ -10,13 +10,14 @@ class RegisterForm extends React.Component {
     state = {
         validForm: false,
         registerForm: CommonConstants.REGISTER_FORM_INIT,
-        errorMessageFromServer: ''
+        messageFromServer: '',
+        responseStatusFromServer: ''
     }
 
     inputChangedHandler = (event, inputIndentifier) => {
         if (inputIndentifier === 'email') {
             this.setState({
-                errorMessageFromServer: ''
+                messageFromServer: ''
             });
         }
         const updatedRegisterForm = {
@@ -51,17 +52,18 @@ class RegisterForm extends React.Component {
         }
 
         try {
-            await axios.post('http://localhost:5000/api/users', { ...formData });
+            const response = await axios.post('http://localhost:5000/api/users', { ...formData });
             this.setState({
-                registerForm: CommonConstants.REGISTER_FORM_INIT
+                registerForm: CommonConstants.REGISTER_FORM_INIT,
+                messageFromServer: 'Register new user successfully!!!',
+                responseStatusFromServer: response.status
             });
         } catch (error) {
             if (error.response) {
                 this.setState({
-                    errorMessageFromServer: error.response.data
+                    messageFromServer: error.response.data,
+                    responseStatusFromServer: error.response.status
                 });
-                console.log(error.response.data);
-                console.log(error.response.status);
             } else if (error.request) {
                 console.log(error.request);
             } else {
@@ -112,7 +114,13 @@ class RegisterForm extends React.Component {
                 onSubmit={this.registerHandler}
             >
                 <label className={classes['form-title']}>Register</label>
-                {this.state.errorMessageFromServer ? <p className={classes['error-message-from-server']}>{this.state.errorMessageFromServer}</p> : null}
+
+                {
+                    this.state.messageFromServer ? 
+                    <p className={this.state.responseStatusFromServer === 200 ? classes['success-message-from-server'] 
+                    : classes['error-message-from-server']}>{this.state.messageFromServer}</p> : null
+                }
+
                 {formElementsArray.map(formElement => (
                     <Input
                         key={formElement.id}
@@ -123,7 +131,7 @@ class RegisterForm extends React.Component {
                         inValid={!formElement.config.valid}
                         touched={formElement.config.touched}
                         errorValidationMessage={formElement.config.errorValidationMessage}
-                        errorMessageFromServer={this.state.errorMessageFromServer}
+                        messageFromServer={this.state.messageFromServer}
                         changed={(event) => this.inputChangedHandler(event, formElement.id)}/>
                 ))}
                 <span
