@@ -4,6 +4,7 @@ import classes from './RegisterForm.module.css';
 import FlatButton from '../UI/FlatButton/FlatButton';
 import * as CommonConstants from '../../constants/index';
 import axios from 'axios';
+import Spinner from '../UI/Spinner/Spinner';
 
 class RegisterForm extends React.Component {
 
@@ -11,7 +12,8 @@ class RegisterForm extends React.Component {
         validForm: false,
         registerForm: CommonConstants.REGISTER_FORM_INIT,
         messageFromServer: '',
-        responseStatusFromServer: ''
+        responseStatusFromServer: '',
+        formLoading: false
     }
 
     inputChangedHandler = (event, inputIndentifier) => {
@@ -45,6 +47,9 @@ class RegisterForm extends React.Component {
     }
 
     registerHandler = async (event) => {
+        this.setState({
+            formLoading: true
+        });
         event.preventDefault();
         let formData = {};
         for (let formElementIdentifier in this.state.registerForm) {
@@ -54,15 +59,19 @@ class RegisterForm extends React.Component {
         try {
             const response = await axios.post('http://localhost:5000/api/users', { ...formData });
             this.setState({
+                validForm: false,
                 registerForm: CommonConstants.REGISTER_FORM_INIT,
                 messageFromServer: 'Register new user successfully!!!',
-                responseStatusFromServer: response.status
+                responseStatusFromServer: response.status,
+                formLoading: false
             });
         } catch (error) {
             if (error.response) {
                 this.setState({
+                    validForm: false,
                     messageFromServer: error.response.data,
-                    responseStatusFromServer: error.response.status
+                    responseStatusFromServer: error.response.status,
+                    formLoading: false
                 });
             } else if (error.request) {
                 console.log(error.request);
@@ -73,7 +82,7 @@ class RegisterForm extends React.Component {
 
     }
 
-    checkValidity (value, rules) {
+    checkValidity(value, rules) {
         let isValid = true;
         let errorMessage = '';
         if (rules.required) {
@@ -109,40 +118,43 @@ class RegisterForm extends React.Component {
             });
         }
         return (
-            <form
-                className={classes['form']}
-                onSubmit={this.registerHandler}
-            >
-                <label className={classes['form-title']}>Register</label>
+            <React.Fragment>
+                <Spinner display={this.state.formLoading ? 'block' : 'none'}/>
+                <form style={{visibility: this.state.formLoading ? 'hidden' : null}}
+                    className={classes['form']}
+                    onSubmit={this.registerHandler}
+                >
+                    <label className={classes['form-title']}>Register</label>
 
-                {
-                    this.state.messageFromServer ? 
-                    <p className={this.state.responseStatusFromServer === 200 ? classes['success-message-from-server'] 
-                    : classes['error-message-from-server']}>{this.state.messageFromServer}</p> : null
-                }
+                    {
+                        this.state.messageFromServer ?
+                            <p className={this.state.responseStatusFromServer === 200 ? classes['success-message-from-server']
+                                : classes['error-message-from-server']}>{this.state.messageFromServer}</p> : null
+                    }
 
-                {formElementsArray.map(formElement => (
-                    <Input
-                        key={formElement.id}
-                        elementType={formElement.config.elementType}
-                        elementConfig={formElement.config.elementConfig}
-                        label={formElement.config.label}
-                        value={formElement.config.value}
-                        inValid={!formElement.config.valid}
-                        touched={formElement.config.touched}
-                        errorValidationMessage={formElement.config.errorValidationMessage}
-                        messageFromServer={this.state.messageFromServer}
-                        changed={(event) => this.inputChangedHandler(event, formElement.id)}/>
-                ))}
-                <span
-                    className={classes['terms-policies']}>
-                    By creating an account you agree to the
+                    {formElementsArray.map(formElement => (
+                        <Input
+                            key={formElement.id}
+                            elementType={formElement.config.elementType}
+                            elementConfig={formElement.config.elementConfig}
+                            label={formElement.config.label}
+                            value={formElement.config.value}
+                            inValid={!formElement.config.valid}
+                            touched={formElement.config.touched}
+                            errorValidationMessage={formElement.config.errorValidationMessage}
+                            messageFromServer={this.state.messageFromServer}
+                            changed={(event) => this.inputChangedHandler(event, formElement.id)} />
+                    ))}
+                    <span
+                        className={classes['terms-policies']}>
+                        By creating an account you agree to the
                     <span className={classes['orange-underline-bold']}> Terms of Service </span>
-                    and
+                        and
                     <span className={classes['orange-underline-bold']}> Privacy Policy </span>
-                </span>
-                <FlatButton backGroundColor='#ffa15f' disabled={!this.state.validForm}>Register</FlatButton>
-            </form>
+                    </span>
+                    <FlatButton backGroundColor='#ffa15f' disabled={!this.state.validForm}>Register</FlatButton>
+                </form>
+            </React.Fragment>
         );
     }
 }
