@@ -26,3 +26,16 @@
 .input-element:focus {
     outline: none;
 }
+
+.invalid {
+    border: 1px solid #f63f45;
+    background-color: rgba(246, 63, 69, 0.04);
+}
+
+.error-validation-message {
+    font: inherit;
+    font-size: 10px;
+    color: #f63f45;
+    font-weight: 500;
+    margin-bottom: 0;
+}

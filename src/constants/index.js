@@ -21,7 +21,15 @@ export const REGISTER_FORM_INIT = {
             type: 'text',
         },
         label: 'NAME',
-        value: ''
+        value: '',
+        validation: {
+            required: true,
+            minLength: 5,
+            maxLength: 50
+        },
+        valid: false,
+        touched: false,
+        errorValidationMessage: ''
     },
     email: {
         elementType: 'input',
@@ -30,7 +38,15 @@ export const REGISTER_FORM_INIT = {
             type: 'email',
         },
         label: 'E-MAIL',
-        value: ''
+        value: '',
+        validation: {
+            required: true,
+            minLength: 5,
+            maxLength: 255
+        },
+        valid: false,
+        touched: false,
+        errorValidationMessage: ''
     },
     password: {
         elementType: 'input',
@@ -39,6 +55,14 @@ export const REGISTER_FORM_INIT = {
             type: 'password',
         },
         label: 'PASSWORD',
-        value: ''
+        value: '',
+        validation: {
+            required: true,
+            minLength: 5,
+            maxLength: 1024
+        },
+        valid: false,
+        touched: false,
+        errorValidationMessage: ''
     }
 };

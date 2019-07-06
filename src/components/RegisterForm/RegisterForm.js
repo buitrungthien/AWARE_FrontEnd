@@ -8,7 +8,7 @@ import axios from 'axios';
 class RegisterForm extends React.Component {
 
     state = {
-        validForm: true,
+        validForm: false,
         registerForm: CommonConstants.REGISTER_FORM_INIT
     }
 
@@ -19,10 +19,22 @@ class RegisterForm extends React.Component {
         const updatedFormElement = {
             ...updatedRegisterForm[inputIndentifier]
         }
+        updatedFormElement.errorValidationMessage = '';
         updatedFormElement.value = event.target.value;
+        updatedFormElement.valid = this.checkValidity(updatedFormElement.value, updatedFormElement.validation).isValid;
+        updatedFormElement.errorValidationMessage = this.checkValidity(updatedFormElement.value, updatedFormElement.validation).errorMessage;
+        updatedFormElement.touched = true;
+        console.log(updatedFormElement.errorValidationMessage);
         updatedRegisterForm[inputIndentifier] = updatedFormElement;
+
+        let formIsValid = true;
+        for (let inputIdentifier in updatedRegisterForm) {
+            formIsValid = updatedRegisterForm[inputIdentifier].valid && formIsValid;
+        }
+
         this.setState({
-            registerForm: updatedRegisterForm
+            registerForm: updatedRegisterForm,
+            validForm: formIsValid
         });
     }
 
@@ -52,6 +64,32 @@ class RegisterForm extends React.Component {
 
     }
 
+    checkValidity (value, rules) {
+        let isValid = true;
+        let errorMessage = '';
+        if (rules.required) {
+            isValid = value.trim() !== '' && isValid;
+            // eslint-disable-next-line
+            value.trim() == '' ? errorMessage = `${errorMessage} is required` : errorMessage = errorMessage;
+        }
+
+        if (rules.minLength) {
+            isValid = value.length >= rules.minLength && isValid;
+            // eslint-disable-next-line
+            value.length !== 0 && value.length < rules.minLength ? errorMessage = `${errorMessage} must have minimum ${rules.minLength} characters long` : errorMessage = errorMessage;
+        }
+
+        if (rules.maxLength) {
+            isValid = value.length <= rules.maxLength && isValid;
+            // eslint-disable-next-line
+            value.length > rules.maxLength ? errorMessage = `${errorMessage} must have maximum ${rules.maxLength} characters long` : errorMessage = errorMessage;
+        }
+
+        return {
+            isValid,
+            errorMessage
+        };
+    }
 
     render() {
         const formElementsArray = [];
@@ -74,6 +112,9 @@ class RegisterForm extends React.Component {
                         elementConfig={formElement.config.elementConfig}
                         label={formElement.config.label}
                         value={formElement.config.value}
+                        inValid={!formElement.config.valid}
+                        touched={formElement.config.touched}
+                        errorValidationMessage={formElement.config.errorValidationMessage}
                         changed={(event) => this.inputChangedHandler(event, formElement.id)} />
                 ))}
                 <span
@@ -83,7 +124,7 @@ class RegisterForm extends React.Component {
                     and
                     <span className={classes['orange-underline-bold']}> Privacy Policy </span>
                 </span>
-                <FlatButton backGroundColor={this.state.validForm ? '#ffa15f' : '#d4d3d3'}>Register</FlatButton>
+                <FlatButton backGroundColor='#ffa15f' disabled={!this.state.validForm}>Register</FlatButton>
             </form>
         );
     }
