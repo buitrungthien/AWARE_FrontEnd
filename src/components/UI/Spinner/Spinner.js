@@ -2,8 +2,10 @@ import React from 'react';
 import classes from './Spinner.module.css';
 
 const spinner = (props) => (
-    <div className={classes.loader} style={{display: props.display}}>
-        Loadding...
+    <div style={{display: props.display, backgroundColor: 'black', position: 'fixed', width: '100%', height: '100%'}}>
+        <div className={classes.loader}>
+            Loadding...
+        </div>
     </div>
 );
 

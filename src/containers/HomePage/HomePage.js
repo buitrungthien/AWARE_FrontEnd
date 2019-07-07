@@ -7,6 +7,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 import LogInButton from '../../components/UI/LogInButton/LogInButton';
+import Spinner from '../../components/UI/Spinner/Spinner';
 
 class HomePage extends React.Component {
 
@@ -22,19 +23,37 @@ class HomePage extends React.Component {
         }
     }
 
-    async componentWillMount () {
-        const response = await axios.get('http://localhost:5000/api/users/me', {
-            headers: {
-                'x-auth-token': localStorage.getItem('token')
+    async componentWillMount() {
+        this.setState((prevState, props) => {
+            return {
+                spinnerLoadingCounter: prevState.spinnerLoadingCounter + 1
             }
         });
-        if (response) {
-            this.setState({
-                currentUser: {
-                    id: response.data._id,
-                    isSeller: response.data.isSeller,
-                    name: response.data.name,
-                    email: response.data.email
+        if (localStorage.getItem('token')) {
+            const response = await axios.get('http://localhost:5000/api/users/me', {
+                headers: {
+                    'x-auth-token': localStorage.getItem('token')
+                }
+            });
+            this.setState((prevState, props) => {
+                return {
+                    spinnerLoadingCounter: prevState.spinnerLoadingCounter - 1
+                }
+            });
+            if (response) {
+                this.setState({
+                    currentUser: {
+                        id: response.data._id,
+                        isSeller: response.data.isSeller,
+                        name: response.data.name,
+                        email: response.data.email
+                    }
+                });
+            }
+        } else {
+            this.setState((prevState, props) => {
+                return {
+                    spinnerLoadingCounter: prevState.spinnerLoadingCounter - 1
                 }
             });
         }
@@ -60,7 +79,7 @@ class HomePage extends React.Component {
         });
     }
 
-    changeFormHandler (typeOfForm) {
+    changeFormHandler(typeOfForm) {
         this.setState({
             typeOfForm: typeOfForm
         });
@@ -99,28 +118,29 @@ class HomePage extends React.Component {
     render() {
         return (
             <React.Fragment>
-                <ToastContainer autoClose={2000}/>
+                <Spinner display={this.state.spinnerLoadingCounter !== 0 ? 'block' : 'none'} />
+                <ToastContainer autoClose={1500} />
                 <h1>This is the Home Page</h1>
-                <button style={{display: this.state.currentUser.id ? 'none' : null}} onClick={this.openRegisterFormHandler}>Register</button>&nbsp;
+                <button style={{ display: this.state.currentUser.id ? 'none' : null }} onClick={this.openRegisterFormHandler}>Register</button>&nbsp;
                 <LogInButton display={this.state.currentUser.id ? 'none' : null} clicked={this.openLogInFormHandler}>Log in</LogInButton>&nbsp;
-                <button style={{display: this.state.currentUser.id ? null : 'none'}} onClick={this.logOut}>Log out</button>
+                <button style={{ display: this.state.currentUser.id ? null : 'none' }} onClick={this.logOut}>Log out</button>
                 {
-                    this.state.modalOpen ? 
-                    <Modal show={this.state.modalOpen} closeModal={this.formCloseHandler}>
-                        {
-                            this.state.typeOfForm === CommonConstants.FORM_TYPES.register ? 
-                            <RegisterForm changeForm={() => this.changeFormHandler(CommonConstants.FORM_TYPES.normalLogIn)}/> 
-                            : this.state.typeOfForm === CommonConstants.FORM_TYPES.normalLogIn ?
-                            <LogInForm 
-                                changeForm={() => this.changeFormHandler(CommonConstants.FORM_TYPES.register)}
-                                logInNotify={this.notify}
-                                closeModal={this.formCloseHandler}
-                                token={this.storeToken}
-                                />
-                            : null
-                        }
-                    </Modal>
-                    : null
+                    this.state.modalOpen ?
+                        <Modal show={this.state.modalOpen} closeModal={this.formCloseHandler}>
+                            {
+                                this.state.typeOfForm === CommonConstants.FORM_TYPES.register ?
+                                    <RegisterForm changeForm={() => this.changeFormHandler(CommonConstants.FORM_TYPES.normalLogIn)} />
+                                    : this.state.typeOfForm === CommonConstants.FORM_TYPES.normalLogIn ?
+                                        <LogInForm
+                                            changeForm={() => this.changeFormHandler(CommonConstants.FORM_TYPES.register)}
+                                            logInNotify={this.notify}
+                                            closeModal={this.formCloseHandler}
+                                            token={this.storeToken}
+                                        />
+                                        : null
+                            }
+                        </Modal>
+                        : null
                 }
             </React.Fragment>
         );
