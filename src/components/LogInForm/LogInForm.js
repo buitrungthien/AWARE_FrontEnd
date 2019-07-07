@@ -60,6 +60,9 @@ class LogInForm extends React.Component {
                 responseStatusFromServer: response.status,
                 formLoading: false
             });
+            this.props.logInNotify("Loged in successfully!!!", true);
+            this.props.closeModal();
+            this.props.token(response.data);
         } catch (error) {
             if (error.response) {
                 this.setState({
