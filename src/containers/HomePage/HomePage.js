@@ -6,10 +6,12 @@ import LogInForm from '../../components/LogInForm/LogInForm';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
+import LogInButton from '../../components/UI/LogInButton/LogInButton';
 
 class HomePage extends React.Component {
 
     state = {
+        spinnerLoadingCounter: 0,
         modalOpen: false,
         typeOfForm: '',
         currentUser: {
@@ -17,6 +19,24 @@ class HomePage extends React.Component {
             isSeller: false,
             name: '',
             email: ''
+        }
+    }
+
+    async componentWillMount () {
+        const response = await axios.get('http://localhost:5000/api/users/me', {
+            headers: {
+                'x-auth-token': localStorage.getItem('token')
+            }
+        });
+        if (response) {
+            this.setState({
+                currentUser: {
+                    id: response.data._id,
+                    isSeller: response.data.isSeller,
+                    name: response.data.name,
+                    email: response.data.email
+                }
+            });
         }
     }
 
@@ -57,14 +77,16 @@ class HomePage extends React.Component {
                 'x-auth-token': localStorage.getItem('token')
             }
         });
-        this.setState({
-            currentUser: {
-                id: response.data._id,
-                isSeller: response.data.isSeller,
-                name: response.data.name,
-                email: response.data.email
-            }
-        });
+        if (response) {
+            this.setState({
+                currentUser: {
+                    id: response.data._id,
+                    isSeller: response.data.isSeller,
+                    name: response.data.name,
+                    email: response.data.email
+                }
+            });
+        }
     }
 
     logOut = () => {
@@ -80,7 +102,7 @@ class HomePage extends React.Component {
                 <ToastContainer autoClose={2000}/>
                 <h1>This is the Home Page</h1>
                 <button style={{display: this.state.currentUser.id ? 'none' : null}} onClick={this.openRegisterFormHandler}>Register</button>&nbsp;
-                <button style={{display: this.state.currentUser.id ? 'none' : null}} onClick={this.openLogInFormHandler}>Log in</button>&nbsp;
+                <LogInButton display={this.state.currentUser.id ? 'none' : null} clicked={this.openLogInFormHandler}>Log in</LogInButton>&nbsp;
                 <button style={{display: this.state.currentUser.id ? null : 'none'}} onClick={this.logOut}>Log out</button>
                 {
                     this.state.modalOpen ? 
