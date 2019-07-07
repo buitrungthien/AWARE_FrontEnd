@@ -66,3 +66,34 @@ export const REGISTER_FORM_INIT = {
         errorValidationMessage: ''
     }
 };
+
+export const LOGIN_FORM_INIT = {
+    email: {
+        elementType: 'input',
+        elementConfig: {
+            placeholder: "Enter your email...",
+            type: 'email',
+        },
+        label: 'E-MAIL',
+        value: '',
+        validation: {
+            required: true
+        },
+        valid: false,
+        touched: false
+    },
+    password: {
+        elementType: 'input',
+        elementConfig: {
+            placeholder: "Enter your password...",
+            type: 'password',
+        },
+        label: 'PASSWORD',
+        value: '',
+        validation: {
+            required: true
+        },
+        valid: false,
+        touched: false
+    }
+};

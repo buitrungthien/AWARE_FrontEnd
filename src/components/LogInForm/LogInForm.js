@@ -1,67 +1,62 @@
 import React from 'react';
-import Input from '../UI/Input/Input';
-import classes from './RegisterForm.module.css';
-import FlatButton from '../UI/FlatButton/FlatButton';
+import classes from '../RegisterForm/RegisterForm.module.css';
 import * as CommonConstants from '../../constants/index';
-import axios from 'axios';
 import Spinner from '../UI/Spinner/Spinner';
+import axios from 'axios';
+import Input from '../UI/Input/Input';
+import FlatButton from '../UI/FlatButton/FlatButton';
 
-class RegisterForm extends React.Component {
-
+class LogInForm extends React.Component {
     state = {
         validForm: false,
-        registerForm: CommonConstants.REGISTER_FORM_INIT,
+        logInForm: CommonConstants.LOGIN_FORM_INIT,
         messageFromServer: '',
         responseStatusFromServer: '',
         formLoading: false
     }
 
     inputChangedHandler = (event, inputIndentifier) => {
-        if (inputIndentifier === 'email') {
-            this.setState({
-                messageFromServer: ''
-            });
-        }
-        const updatedRegisterForm = {
-            ...this.state.registerForm
+
+        const updatedLogInForm = {
+            ...this.state.logInForm
         }
         const updatedFormElement = {
-            ...updatedRegisterForm[inputIndentifier]
+            ...updatedLogInForm[inputIndentifier]
         }
         updatedFormElement.errorValidationMessage = '';
         updatedFormElement.value = event.target.value;
         updatedFormElement.valid = this.checkValidity(updatedFormElement.value, updatedFormElement.validation).isValid;
         updatedFormElement.errorValidationMessage = this.checkValidity(updatedFormElement.value, updatedFormElement.validation).errorMessage;
         updatedFormElement.touched = true;
-        updatedRegisterForm[inputIndentifier] = updatedFormElement;
+        updatedLogInForm[inputIndentifier] = updatedFormElement;
 
         let formIsValid = true;
-        for (let inputIdentifier in updatedRegisterForm) {
-            formIsValid = updatedRegisterForm[inputIdentifier].valid && formIsValid;
+        for (let inputIdentifier in updatedLogInForm) {
+            formIsValid = updatedLogInForm[inputIdentifier].valid && formIsValid;
         }
 
         this.setState({
-            registerForm: updatedRegisterForm,
-            validForm: formIsValid,
+            logInForm: updatedLogInForm,
+            validForm: formIsValid
         });
     }
 
-    registerHandler = async (event) => {
+    logInHandler = async (event) => {
         this.setState({
             formLoading: true
         });
         event.preventDefault();
         let formData = {};
-        for (let formElementIdentifier in this.state.registerForm) {
-            formData[formElementIdentifier] = this.state.registerForm[formElementIdentifier].value;
+        for (let formElementIdentifier in this.state.logInForm) {
+            formData[formElementIdentifier] = this.state.logInForm[formElementIdentifier].value;
         }
 
         try {
-            const response = await axios.post('http://localhost:5000/api/users', { ...formData });
+            const response = await axios.post('http://localhost:5000/api/login', { ...formData });
             this.setState({
                 validForm: false,
-                registerForm: CommonConstants.REGISTER_FORM_INIT,
-                messageFromServer: 'Register new user successfully!!!',
+                logInForm: CommonConstants.LOGIN_FORM_INIT,
+                messageFromServer: 'Login successfully!!!',
                 responseStatusFromServer: response.status,
                 formLoading: false
             });
@@ -111,20 +106,20 @@ class RegisterForm extends React.Component {
 
     render() {
         const formElementsArray = [];
-        for (let key in this.state.registerForm) {
+        for (let key in this.state.logInForm) {
             formElementsArray.push({
                 id: key,
-                config: this.state.registerForm[key]
+                config: this.state.logInForm[key]
             });
         }
         return (
             <React.Fragment>
-                <Spinner display={this.state.formLoading ? 'block' : 'none'}/>
-                <form style={{visibility: this.state.formLoading ? 'hidden' : null}}
+                <Spinner display={this.state.formLoading ? 'block' : 'none'} />
+                <form style={{ visibility: this.state.formLoading ? 'hidden' : null }}
                     className={classes['form']}
-                    onSubmit={this.registerHandler}
+                    onSubmit={this.logInHandler}
                 >
-                    <label className={classes['form-title']}>Register</label>
+                    <label className={classes['form-title']}>Log In</label>
 
                     {
                         this.state.messageFromServer ?
@@ -145,20 +140,13 @@ class RegisterForm extends React.Component {
                             messageFromServer={this.state.messageFromServer}
                             changed={(event) => this.inputChangedHandler(event, formElement.id)} />
                     ))}
-                    <span
-                        className={classes['terms-policies']}>
-                        By creating an account you agree to the
-                        <span className={classes['orange-underline-bold']}> Terms of Service </span>
-                            and
-                        <span className={classes['orange-underline-bold']}> Privacy Policy </span>
-                    </span>
                     <FlatButton backGroundColor='#ffa15f' disabled={!this.state.validForm}>Register</FlatButton>
                     <hr></hr>
-                    <span style={{paddingBottom: 0}} className={classes['terms-policies']}>
-                        Do you have an account?
+                    <span style={{ paddingBottom: 0 }} className={classes['terms-policies']}>
+                        Don't have an account?
                         <span
                             onClick={this.props.changeForm}
-                            className={classes['orange-underline-bold']}> Log in
+                            className={classes['orange-underline-bold']}> Register
                         </span>
                     </span>
                 </form>
@@ -167,4 +155,4 @@ class RegisterForm extends React.Component {
     }
 }
 
-export default RegisterForm;
+export default LogInForm;
