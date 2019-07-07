@@ -64,7 +64,7 @@ class LogInForm extends React.Component {
             if (error.response) {
                 this.setState({
                     validForm: false,
-                    messageFromServer: error.response.data,
+                    messageFromServer: 'Incorrect email or password',
                     responseStatusFromServer: error.response.status,
                     formLoading: false
                 });
