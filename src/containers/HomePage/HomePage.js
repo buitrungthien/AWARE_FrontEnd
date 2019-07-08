@@ -120,6 +120,15 @@ class HomePage extends React.Component {
         });
     }
 
+    updateUserInfo = (newUserInfo) => {
+        this.setState({
+            currentUser: {
+                email: newUserInfo.email ? newUserInfo.email : this.state.currentUser.email,
+                name: newUserInfo.name ? newUserInfo.name : this.state.currentUser.name
+            }
+        });
+    }
+
     render() {
         return (
             <React.Fragment>
@@ -137,6 +146,7 @@ class HomePage extends React.Component {
                         <Profile
                             userName={this.state.currentUser.name}
                             userEmail={this.state.currentUser.email}
+                            userUpdated={(newUserInfo) => {this.updateUserInfo(newUserInfo)}}
                         />
                     </div>
                 </div>

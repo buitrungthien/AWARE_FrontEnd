@@ -4,14 +4,14 @@ import classes from './Info.module.css';
 import Input from '../../UI/Input/Input';
 import FlatButton from '../../UI/FlatButton/FlatButton';
 import * as CommonConstants from '../../../constants/index';
+import axios from 'axios';
 
 class Info extends React.Component {
     state = {
         validForm: true,
         changeInfoForm: CommonConstants.CHANGE_INFO_FORM_INIT,
         messageFromServer: '',
-        responseStatusFromServer: '',
-        formLoading: false
+        responseStatusFromServer: ''
     }
 
     inputChangedHandler = (event, inputIndentifier) => {
@@ -67,6 +67,88 @@ class Info extends React.Component {
         };
     }
 
+    changeInfoHandler = async (event) => {
+        event.preventDefault();
+        let formData = {};
+        for (let formElementIdentifier in this.state.changeInfoForm) {
+            formData[formElementIdentifier] = this.state.changeInfoForm[formElementIdentifier].value;
+        }
+
+        try {
+            if (!this.state.changeInfoForm.name.value && this.state.changeInfoForm.email.value === '') {
+                this.props.toggleEdit();
+                return;
+            } else if (this.state.changeInfoForm.name.value && !this.state.changeInfoForm.email.value) {
+                const response = await axios.patch('http://localhost:5000/api/users', { name: formData.name }, {
+                    headers: {
+                        'x-auth-token': localStorage.getItem('token')
+                    }
+                });
+                this.setState({
+                    validForm: true,
+                    messageFromServer: "User's info changed",
+                    responseStatusFromServer: response.status
+                });
+                this.props.logInNotify(this.state.messageFromServer, true);
+                const newUserInfo = {
+                    name: this.state.changeInfoForm.name.value,
+                    email: this.state.changeInfoForm.email.value
+                };
+                this.props.userUpdated(newUserInfo);
+                this.props.toggleEdit();
+            } else if (!this.state.changeInfoForm.name.value && this.state.changeInfoForm.email.value) {
+                const response = await axios.patch('http://localhost:5000/api/users', { email: formData.email }, {
+                    headers: {
+                        'x-auth-token': localStorage.getItem('token')
+                    }
+                });
+                this.setState({
+                    validForm: true,
+                    messageFromServer: "User's info changed",
+                    responseStatusFromServer: response.status
+                });
+                this.props.logInNotify(this.state.messageFromServer, true);
+                const newUserInfo = {
+                    name: this.state.changeInfoForm.name.value,
+                    email: this.state.changeInfoForm.email.value
+                };
+                this.props.userUpdated(newUserInfo);
+                this.props.toggleEdit();
+            } else {
+                const response = await axios.put('http://localhost:5000/api/users', { ...formData }, {
+                    headers: {
+                        'x-auth-token': localStorage.getItem('token')
+                    }
+                });
+                this.setState({
+                    validForm: true,
+                    messageFromServer: "User's info changed",
+                    responseStatusFromServer: response.status
+                });
+                this.props.logInNotify(this.state.messageFromServer, true);
+                const newUserInfo = {
+                    name: this.state.changeInfoForm.name.value,
+                    email: this.state.changeInfoForm.email.value
+                };
+                this.props.userUpdated(newUserInfo);
+                this.props.toggleEdit();
+            }
+        } catch (error) {
+            if (error.response) {
+                this.setState({
+                    validForm: false,
+                    messageFromServer: error.response.data,
+                    responseStatusFromServer: error.response.status
+                });
+                this.props.logInNotify(this.state.messageFromServer, false);
+            } else if (error.request) {
+                console.log(error.request);
+            } else {
+                console.log('Error', error.message);
+            }
+        }
+    }
+
     render() {
         const formElementsArray = [];
         for (let key in this.state.changeInfoForm) {
@@ -85,33 +167,35 @@ class Info extends React.Component {
                         Edit
                     </span>
                 </div>
-                <div className={`row ${classes['info']}`} style={{ display: 'block' }}>
-                    { !this.props.editing ? <InfoElement label="Name">{this.props.userName}</InfoElement> : null }
-                    { !this.props.editing ? <InfoElement label="E-mail">{this.props.userEmail}</InfoElement> : null }
+                <form
+                    className={`row ${classes['info']}`}
+                    style={{ display: 'block' }}
+                    onSubmit={this.changeInfoHandler}>
+                    {!this.props.editing ? <InfoElement label="Name">{this.props.userName}</InfoElement> : null}
+                    {!this.props.editing ? <InfoElement label="E-mail">{this.props.userEmail}</InfoElement> : null}
                     {
                         this.props.editing ?
-                        formElementsArray.map(formElement => (
-                            <Input
-                                key={formElement.id}
-                                elementType={formElement.config.elementType}
-                                elementConfig={formElement.config.elementConfig}
-                                label={formElement.config.label}
-                                // value={formElement.config.value}
-                                value={ formElement.config.touched ? formElement.config.value : formElement.id === 'name' ? this.props.userName : this.props.userEmail}
-                                inValid={!formElement.config.valid}
-                                touched={formElement.config.touched}
-                                errorValidationMessage={formElement.config.errorValidationMessage}
-                                messageFromServer={this.state.messageFromServer}
-                                changed={(event) => this.inputChangedHandler(event, formElement.id)} />
-                        ))
-                        : null
+                            formElementsArray.map(formElement => (
+                                <Input
+                                    key={formElement.id}
+                                    elementType={formElement.config.elementType}
+                                    elementConfig={formElement.config.elementConfig}
+                                    label={formElement.config.label}
+                                    // value={formElement.config.value}
+                                    value={formElement.config.touched ? formElement.config.value : formElement.id === 'name' ? this.props.userName : this.props.userEmail}
+                                    invalid={!formElement.config.valid}
+                                    touched={formElement.config.touched}
+                                    errorValidationMessage={formElement.config.errorValidationMessage}
+                                    changed={(event) => this.inputChangedHandler(event, formElement.id)} />
+                            ))
+                            : null
                     }
                     {
                         this.props.editing ?
                             <div className="row d-flex align-items-baseline">
                                 <div className="col-md-2 offset-md-5">
-                                    <label 
-                                        style={{cursor: 'pointer'}}
+                                    <label
+                                        style={{ cursor: 'pointer' }}
                                         onClick={this.props.toggleEdit}>
                                         Cancel
                                     </label>
@@ -122,7 +206,7 @@ class Info extends React.Component {
                             </div>
                             : null
                     }
-                </div>
+                </form>
             </React.Fragment >
         );
     };

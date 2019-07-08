@@ -77,7 +77,6 @@ class LogInForm extends React.Component {
                 console.log('Error', error.message);
             }
         }
-
     }
 
     checkValidity(value, rules) {
@@ -140,7 +139,6 @@ class LogInForm extends React.Component {
                             inValid={!formElement.config.valid}
                             touched={formElement.config.touched}
                             errorValidationMessage={formElement.config.errorValidationMessage}
-                            messageFromServer={this.state.messageFromServer}
                             changed={(event) => this.inputChangedHandler(event, formElement.id)} />
                     ))}
                     <FlatButton backGroundColor='#ffa15f' disabled={!this.state.validForm}>Log in</FlatButton>

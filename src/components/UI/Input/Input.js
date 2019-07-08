@@ -6,7 +6,7 @@ const input = (props) => {
     const inputClasses = [classes['input-element']];
     let errorValidationMessage = null;
 
-    if (props.inValid && props.touched) {
+    if (props.invalid && props.touched) {
         inputClasses.push(classes['invalid']);
         errorValidationMessage = <p className={classes['error-validation-message']}>{ props.label }{ props.errorValidationMessage }</p>;
     }

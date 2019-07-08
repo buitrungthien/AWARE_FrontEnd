@@ -142,7 +142,6 @@ class RegisterForm extends React.Component {
                             inValid={!formElement.config.valid}
                             touched={formElement.config.touched}
                             errorValidationMessage={formElement.config.errorValidationMessage}
-                            messageFromServer={this.state.messageFromServer}
                             changed={(event) => this.inputChangedHandler(event, formElement.id)} />
                     ))}
                     <span

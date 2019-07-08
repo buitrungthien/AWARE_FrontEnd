@@ -1,6 +1,7 @@
 import React from 'react';
 import classes from './Profile.module.css';
 import Info from './Info/Info';
+import { ToastContainer, toast } from 'react-toastify';
 
 class Profile extends React.Component {
     state = {
@@ -15,9 +16,18 @@ class Profile extends React.Component {
         });
     }
 
+    notify = (message, isSuccess) => {
+        isSuccess ? toast.success(message) : toast.error(message);
+    }
+
+    updateCurrentUserInfo = (newUserInfo) => {
+        this.props.userUpdated(newUserInfo);
+    }
+
     render() {
         return (
             <React.Fragment>
+                <ToastContainer autoClose={1500} />
                 <div className="col-md-3 d-flex flex-column">
                     <h2 style={{ marginBottom: '20px' }}>My Account</h2>
                     <span className={classes['account-control-element']}>Account setting</span>
@@ -29,6 +39,8 @@ class Profile extends React.Component {
                         editing={this.state.editing}
                         userName={this.props.userName}
                         userEmail={this.props.userEmail}
+                        logInNotify={this.notify}
+                        userUpdated={(newUserInfo) => this.updateCurrentUserInfo(newUserInfo)}
                     />
                 </div>
             </React.Fragment>
