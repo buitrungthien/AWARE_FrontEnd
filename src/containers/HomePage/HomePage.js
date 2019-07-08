@@ -6,8 +6,8 @@ import LogInForm from '../../components/LogInForm/LogInForm';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
-import LogInButton from '../../components/UI/LogInButton/LogInButton';
 import Spinner from '../../components/UI/Spinner/Spinner';
+import Header from '../../components/Header/Header';
 
 class HomePage extends React.Component {
 
@@ -20,7 +20,8 @@ class HomePage extends React.Component {
             isSeller: false,
             name: '',
             email: ''
-        }
+        },
+        isLogedIn: false
     }
 
     async componentWillMount() {
@@ -42,6 +43,7 @@ class HomePage extends React.Component {
             });
             if (response) {
                 this.setState({
+                    isLogedIn: true,
                     currentUser: {
                         id: response.data._id,
                         isSeller: response.data.isSeller,
@@ -98,6 +100,7 @@ class HomePage extends React.Component {
         });
         if (response) {
             this.setState({
+                isLogedIn: true,
                 currentUser: {
                     id: response.data._id,
                     isSeller: response.data.isSeller,
@@ -111,19 +114,23 @@ class HomePage extends React.Component {
     logOut = () => {
         localStorage.removeItem('token');
         this.setState({
-            currentUser: {}
+            currentUser: {},
+            isLogedIn: false
         });
     }
 
     render() {
         return (
             <React.Fragment>
+                <Header 
+                    isLogedIn={this.state.isLogedIn}
+                    registerButtonClicked={this.openRegisterFormHandler}
+                    logInButtonClicked={this.openLogInFormHandler}
+                    logOutButtonClicked={this.logOut}
+                />
                 <Spinner display={this.state.spinnerLoadingCounter !== 0 ? 'block' : 'none'} />
                 <ToastContainer autoClose={1500} />
                 <h1>This is the Home Page</h1>
-                <button style={{ display: this.state.currentUser.id ? 'none' : null }} onClick={this.openRegisterFormHandler}>Register</button>&nbsp;
-                <LogInButton display={this.state.currentUser.id ? 'none' : null} clicked={this.openLogInFormHandler}>Log in</LogInButton>&nbsp;
-                <button style={{ display: this.state.currentUser.id ? null : 'none' }} onClick={this.logOut}>Log out</button>
                 {
                     this.state.modalOpen ?
                         <Modal show={this.state.modalOpen} closeModal={this.formCloseHandler}>

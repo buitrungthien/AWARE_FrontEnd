@@ -1,8 +1,9 @@
 import React from 'react';
 import logo from '../../assets/images/logo/logo.svg';
-import searchIcon from '../../assets/images/icons/search.svg';
 import arrow from '../../assets/images/icons/arrow.svg';
 import classes from './Header.module.css';
+import LogInButton from '../UI/LogInButton/LogInButton';
+import SearchBox from './SearchBox/SearchBox';
 
 
 const header = (props) => {
@@ -13,33 +14,44 @@ const header = (props) => {
     };
 
     const allCategories = [
-        {name: "Men"},
-        {name: "Ladies"},
-        {name: "Girls"},
-        {name: "Boys"},
+        { name: "Men" },
+        { name: "Ladies" },
+        { name: "Girls" },
+        { name: "Boys" },
     ];
 
     const categoryList = allCategories.map(category => {
-        return <span>{category.name}<img style={styleForArrow} src={arrow} alt="" /></span>
+        return (
+            <span key={category.name}>
+                {category.name}
+                <img style={styleForArrow} src={arrow} alt="" />
+            </span>
+        );
     });
 
     return (
         <div className={classes.Header}>
-            <div className={classes.UpperHeader}>
-                <div className={classes.SearchBox}>
-                    <input placeholder="Search"></input>
-                    <img src={searchIcon} name="searchIcon" alt="search"></img>
-                </div>
-                <img className={classes.Logo} src={logo} alt="AWARE"></img>
-                <div className={classes.UpperRight}>
-                    <a href="/">Register</a>
-                    <button>Log In</button>
-                    <span>Cart</span>
+            <div className="my-container">
+                <div className="row">
+                    <SearchBox />
+                    <div className="col-6 d-flex justify-content-center align-items-center">
+                        <img className={classes.Logo} src={logo} alt="AWARE"></img>
+                    </div>
+                    <div className="col-3 d-flex justify-content-around align-items-center">
+                        <span className={classes['register-span']} style={{ display: props.isLogedIn ? 'none' : null}} onClick={props.registerButtonClicked}>Register</span>
+                        <LogInButton display={props.isLogedIn ? 'none' : null} clicked={props.logInButtonClicked}>Log in</LogInButton>
+                        <span className={classes['logout-span']} style={{ display: props.isLogedIn ? null : 'none'}} onClick={props.logOutButtonClicked}>Log out</span>
+                        <span>Cart</span>
+                    </div>
                 </div>
             </div>
             <hr />
-            <div className={classes.NavigationBar}>
-                {categoryList}
+            <div className="my-container">
+                <div className="row">
+                    <div className={classes.NavigationBar}>
+                        {categoryList}
+                    </div>
+                </div>
             </div>
         </div>
     );

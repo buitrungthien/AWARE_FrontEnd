@@ -4,25 +4,12 @@
     padding: 20px 0 10px 0;
 }
 
-.Logo {
-    display: block;
-    left: 50%;
-}
-
 .UpperHeader, .SearchBox, .UpperRight, .NavigationBar {
     display: flex;
     flex-direction: row;
     align-items: center;
 }
 
-.UpperHeader {
-    justify-content: space-between;
-}
-
-.UpperRight {
-    justify-content: space-between;
-    width: 300px;
-}
 
 .NavigationBar {
     margin: auto;
@@ -36,13 +23,6 @@
     font-weight: bold;
 }
 
-.SearchBox {
-    height: 35px;
-    height: 35px;
-    border-radius: 17px;
-    border: solid 1px lightgray;
-    padding: 0 10px;
-}
 
 input {
     border: none;
@@ -64,18 +44,8 @@ a {
     text-decoration: none;
 }
 
-button {
-    width: 120px;
-    height: 35px;
-    border-radius: 100px;
-    border: solid 1px #ffa15f;
-    background-color: white;
-    color: #ffa15f;
-    font-weight: bold;
+.register-span, .logout-span {
+    font: inherit; 
     cursor: pointer;
-}
-
-button:hover, button:focus {
-    background-color: #ffa15f;
-    color: white;
+    color: #4d4d4d;
 }
