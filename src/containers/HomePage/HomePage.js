@@ -8,6 +8,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import Header from '../../components/Header/Header';
+import Profile from '../../components/Profile/Profile';
 
 class HomePage extends React.Component {
 
@@ -24,21 +25,16 @@ class HomePage extends React.Component {
         isLogedIn: false
     }
 
-    async componentWillMount() {
-        this.setState((prevState, props) => {
-            return {
-                spinnerLoadingCounter: prevState.spinnerLoadingCounter + 1
-            }
-        });
+    async componentDidMount() {
         if (localStorage.getItem('token')) {
+            this.setState((prevState, props) => {
+                return {
+                    spinnerLoadingCounter: prevState.spinnerLoadingCounter + 1
+                }
+            });
             const response = await axios.get('http://localhost:5000/api/users/me', {
                 headers: {
                     'x-auth-token': localStorage.getItem('token')
-                }
-            });
-            this.setState((prevState, props) => {
-                return {
-                    spinnerLoadingCounter: prevState.spinnerLoadingCounter - 1
                 }
             });
             if (response) {
@@ -51,13 +47,18 @@ class HomePage extends React.Component {
                         email: response.data.email
                     }
                 });
+                this.setState((prevState, props) => {
+                    return {
+                        spinnerLoadingCounter: prevState.spinnerLoadingCounter - 1
+                    }
+                });
+            } else {
+                this.setState((prevState, props) => {
+                    return {
+                        spinnerLoadingCounter: prevState.spinnerLoadingCounter - 1
+                    }
+                });
             }
-        } else {
-            this.setState((prevState, props) => {
-                return {
-                    spinnerLoadingCounter: prevState.spinnerLoadingCounter - 1
-                }
-            });
         }
     }
 
@@ -122,15 +123,23 @@ class HomePage extends React.Component {
     render() {
         return (
             <React.Fragment>
-                <Header 
+                <Spinner display={this.state.spinnerLoadingCounter !== 0 ? 'block' : 'none'} />
+                <Header
                     isLogedIn={this.state.isLogedIn}
                     registerButtonClicked={this.openRegisterFormHandler}
                     logInButtonClicked={this.openLogInFormHandler}
                     logOutButtonClicked={this.logOut}
+                    currentUserEmail={this.state.currentUser.email}
                 />
-                <Spinner display={this.state.spinnerLoadingCounter !== 0 ? 'block' : 'none'} />
                 <ToastContainer autoClose={1500} />
-                <h1>This is the Home Page</h1>
+                <div className="container">
+                    <div className="row mt-5">
+                        <Profile
+                            userName={this.state.currentUser.name}
+                            userEmail={this.state.currentUser.email}
+                        />
+                    </div>
+                </div>
                 {
                     this.state.modalOpen ?
                         <Modal show={this.state.modalOpen} closeModal={this.formCloseHandler}>

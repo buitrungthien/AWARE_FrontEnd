@@ -1,0 +1,10 @@
+.account-control-element {
+    color: #4d4d4d;
+    cursor: pointer;
+    display: block;
+    padding: 9px 0;
+}
+
+.account-control-element:hover, .account-control-element:active {
+    color: #ff6900;
+}

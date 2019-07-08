@@ -13,9 +13,13 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
 
-@media only screen  and (min-width : 1400px) {
-  .my-container {
-    width: 1311px;
-    margin: auto
+@media screen  and (min-width : 1400px) {
+  .container {
+    min-width: 1311px!important;
   }
+}
+
+* {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 14px;
 }

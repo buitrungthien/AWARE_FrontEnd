@@ -1,3 +1,47 @@
+export const CHANGE_INFO_FORM_INIT = {
+    name: {
+        elementType: 'input',
+        elementConfig: {
+            placeholder: "Enter your name...",
+            type: 'text',
+        },
+        label: 'NAME',
+        value: '',
+        validation: {
+            required: true,
+            minLength: 5,
+            maxLength: 50
+        },
+        valid: true,
+        touched: false,
+        errorValidationMessage: ''
+    },
+    email: {
+        elementType: 'input',
+        elementConfig: {
+            placeholder: "Enter your email...",
+            type: 'email',
+        },
+        label: 'E-MAIL',
+        value: '',
+        validation: {
+            required: true,
+            minLength: 5,
+            maxLength: 255
+        },
+        valid: true,
+        touched: false,
+        errorValidationMessage: ''
+    }
+}
+
+export const CATEGORY_LIST = [
+    { name: "Men" },
+    { name: "Ladies" },
+    { name: "Girls" },
+    { name: "Boys" },
+];
+
 export const SELLER_DASHBOARD_LEFT_ITEMS = [
     { name: 'overview' },
     { name: 'orders' },

@@ -4,26 +4,6 @@
     padding: 20px 0 10px 0;
 }
 
-.UpperHeader, .SearchBox, .UpperRight, .NavigationBar {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-}
-
-
-.NavigationBar {
-    margin: auto;
-    justify-content: space-evenly;
-    width: 400px;
-    position: relative;
-}
-
-.NavigationBar>span {
-    color: #202124;
-    font-weight: bold;
-}
-
-
 input {
     border: none;
 }
@@ -45,7 +25,6 @@ a {
 }
 
 .register-span, .logout-span {
-    font: inherit; 
     cursor: pointer;
     color: #4d4d4d;
 }

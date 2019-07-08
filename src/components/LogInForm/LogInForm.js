@@ -143,7 +143,7 @@ class LogInForm extends React.Component {
                             messageFromServer={this.state.messageFromServer}
                             changed={(event) => this.inputChangedHandler(event, formElement.id)} />
                     ))}
-                    <FlatButton backGroundColor='#ffa15f' disabled={!this.state.validForm}>Register</FlatButton>
+                    <FlatButton backGroundColor='#ffa15f' disabled={!this.state.validForm}>Log in</FlatButton>
                     <hr></hr>
                     <span style={{ paddingBottom: 0 }} className={classes['terms-policies']}>
                         Don't have an account?
