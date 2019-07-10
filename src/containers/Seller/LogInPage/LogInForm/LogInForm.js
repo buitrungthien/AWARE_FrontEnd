@@ -1,6 +1,6 @@
 import React from 'react';
-import Input from '../../../common/components/Input/Input';
-import PrimaryButton from '../../../common/components/PrimaryButton/PrimaryButton';
+import Input from '../../../../common/components/Input/Input';
+import PrimaryButton from '../../../../common/components/PrimaryButton/PrimaryButton';
 import classes from './LogInForm.module.css';
 
 const logInForm = (props) => {

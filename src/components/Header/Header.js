@@ -19,10 +19,12 @@ const header = (props) => {
                         <Link to="/products"><img className={classes.Logo} src={logo} alt="AWARE"></img></Link>
                     </div>
                     <div className="col-md-3 d-flex justify-content-around align-items-center">
-                        <span className={classes['register-span']} style={{ display: props.isLogedIn ? 'none' : null}} onClick={props.registerButtonClicked}>Register</span>
+                        <span className={classes['register-span']} style={{ display: props.isLogedIn ? 'none' : null }} onClick={props.registerButtonClicked}>Register</span>
                         <LogInButton display={props.isLogedIn ? 'none' : null} clicked={props.logInButtonClicked}>Log in</LogInButton>
-                        <span style={{ display: props.isLogedIn ? null : 'none', fontStyle: 'italic', color: '#ff6900'}}>{props.currentUserEmail}</span>
-                        <span className={classes['logout-span']} style={{ display: props.isLogedIn ? null : 'none'}} onClick={props.logOutButtonClicked}>Log out</span>
+                        <Link to="/profile">
+                            <span style={{ display: props.isLogedIn ? null : 'none', fontStyle: 'italic', color: '#ff6900' }}>{props.currentUserEmail}</span>
+                        </Link>
+                        <span className={classes['logout-span']} style={{ display: props.isLogedIn ? null : 'none' }} onClick={props.logOutButtonClicked}>Log out</span>
                         <span>Cart</span>
                     </div>
                 </div>

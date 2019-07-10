@@ -1,0 +1,24 @@
+.input {
+    width: 85%;
+    box-sizing: border-box;
+    padding: 12px 0;
+    text-align: right;
+    display: flex;
+    justify-content: flex-end;
+    align-items: baseline;
+}
+
+.input-element {
+    width: 80%;
+    padding: 14px 16px;
+    margin-left: 20px;
+    box-sizing: border-box;
+    float: right;
+    border: solid 1px #ededed;
+}
+
+.label-item {
+    font-weight: bold;
+    line-height: 1.17;
+    font-size: 12px;
+}

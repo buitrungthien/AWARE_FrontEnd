@@ -11,7 +11,7 @@
     color: white;
     font-weight: 600;
     display: block;
-    width: 30%;
+    width: 100%;
     text-align: center;
     margin: 0 auto;
     cursor: pointer;
@@ -31,4 +31,9 @@
     justify-content: space-evenly;
     padding: 0 32px;
     margin: auto;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
 }

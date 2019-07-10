@@ -1,0 +1,12 @@
+.outer-box {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 12px 13px;
+    border-left: solid 7px transparent;
+    cursor: pointer;
+}
+
+.outer-box:hover {
+    border-left: solid 7px #ffa15f;
+    color: #ffa15f;
+}

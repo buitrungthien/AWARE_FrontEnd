@@ -1,3 +1,80 @@
+export const ADD_PRODUCT_FORM_INIT = {
+    name: {
+        elementType: 'input',
+        label: 'NAME',
+        value: ''
+    },
+    categoryOfGender: {
+        elementType: 'multi-select',
+        label: 'CATEGORY OF GENDER',
+        value: [],
+        selectOptions: [
+            { label: 'Men', value: 'men' },
+            { label: 'Ladies', value: 'ladies' },
+            { label: 'Girls', value: 'girls' },
+            { label: 'Boys', value: 'boys' }
+        ]
+    },
+    subCategory: {
+        elementType: 'multi-select',
+        label: 'SUB CATEGORY',
+        value: [],
+        selectOptions: [
+            { label: 'Tops', value: 'tops' },
+            { label: 'Bottoms', value: 'bottoms' },
+            { label: 'Dresses', value: 'dresses' },
+            { label: 'Jackets', value: 'jackets' },
+            { label: 'Shoes', value: 'shoes' },
+            { label: 'Accesories', value: 'accesories' },
+            { label: 'Sale', value: 'sale' }
+        ]
+    },
+    brand: {
+        elementType: 'input',
+        label: 'BRAND',
+        value: ''
+    },
+    price: {
+        elementType: 'input',
+        label: 'PRICE ($)',
+        value: ''
+    },
+    sizes: {
+        elementType: 'multi-select',
+        label: 'SIZES',
+        value: [],
+        selectOptions: [
+            { label: 'S', value: 'S' },
+            { label: 'M', value: 'M' },
+            { label: 'L', value: 'L' },
+            { label: 'XL', value: 'XL' },
+        ]
+    },
+    colors: {
+        elementType: 'multi-select',
+        label: 'COLORS',
+        value: [],
+        selectOptions: [
+            { label: 'Red', value: 'red' },
+            { label: 'Orange', value: 'orange' },
+            { label: 'Blue', value: 'blue' },
+            { label: 'Pink', value: 'pink' },
+            { label: 'Black', value: 'black' },
+            { label: 'White', value: 'white' },
+        ]
+    },
+    quantity: {
+        elementType: 'input',
+        label: 'QUANTITY',
+        value: '',
+    },
+    description: {
+        elementType: 'textarea',
+        label: 'DESCRIPTION',
+        value: '',
+    }
+}
+
 export const CHANGE_INFO_FORM_INIT = {
     name: {
         elementType: 'input',

@@ -9,7 +9,7 @@ import axios from 'axios';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import Header from '../../components/Header/Header';
 import Profile from '../../components/Profile/Profile';
-import { Link, Route, Switch } from 'react-router-dom';
+import { Route, Switch, Redirect } from 'react-router-dom';
 
 class HomePage extends React.Component {
 
@@ -148,7 +148,7 @@ class HomePage extends React.Component {
                 <div className="container">
                     <div className="row mt-5">
                         <Switch>
-                            <Route path="/products" render={() => <h1>This is the product page includes a list of awesome products</h1>} />
+                            <Route path="/products" render={() => <h1>This is the product page includes a list of awesome products. Click on the email on the header to see your profile</h1>} />
                             <Route
                                 path="/profile"
                                 render={() => <Profile
@@ -159,6 +159,7 @@ class HomePage extends React.Component {
                                     history={this.props.history}
                                 />}
                             />
+                            <Redirect from="/" to="/products" />
                         </Switch>
                     </div>
                 </div>
