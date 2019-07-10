@@ -1,31 +1,20 @@
 import React from 'react';
-// import LogIn from './components/SellerDashboard/LogIn/LogIn';
-// import DashboardLayout from './components/SellerDashboard/DashboardLayout/DashboardLayout';
-// import Badge from './common/components/Badge/Badge';
-import Auxxx from './hoc/Auxxx/Auxxx';
 import HomePage from './containers/HomePage/HomePage';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import SellerDashboard from './components/SellerDashboard/DashboardLayout/DashboardLayout';
 
 class App extends React.Component {
 
-    state = {
-        registerFormIsShow: true
-    };
-
-    closeFormHandler = () => {
-        this.setState({
-            registerFormIsShow: false
-        });
-    }
-
     render() {
         return (
-            <Auxxx>
-                <HomePage />
-                {/* <hr />
-                <LogIn />
-                <DashboardLayout />
-                <Badge /> */}
-            </Auxxx>
+            <BrowserRouter>
+                <React.Fragment>
+                    <Switch>
+                        <Route path="/seller" component={SellerDashboard}/>
+                        <Route path="/" component={HomePage}/>
+                    </Switch>
+                </React.Fragment>
+            </BrowserRouter>
         );
     };
 }

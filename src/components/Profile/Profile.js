@@ -24,6 +24,12 @@ class Profile extends React.Component {
         this.props.userUpdated(newUserInfo);
     }
 
+    componentDidUpdate() {
+        if (!this.props.isLogedIn) {
+            this.props.history.replace('/products');
+        }
+    }
+
     render() {
         return (
             <React.Fragment>

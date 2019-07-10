@@ -1,12 +1,11 @@
 import React from 'react';
 import classes from './Modal.module.css';
 import Backdrop from '../Backdrop/Backdrop';
-import Auxxx from '../../../hoc/Auxxx/Auxxx';
 import CloseIcon from '../../../assets/images/icons/cross.svg';
 
 const modal = (props) => {
     return (
-        <Auxxx>
+        <React.Fragment>
             <Backdrop show={props.show} clicked={props.closeModal}/>
             <div className={classes['modal']}>
                 <i style={{float: 'right', padding: '10px'}}>
@@ -14,7 +13,7 @@ const modal = (props) => {
                 </i>
                 {props.children}
             </div>
-        </Auxxx>
+        </React.Fragment>
     );
 }
 

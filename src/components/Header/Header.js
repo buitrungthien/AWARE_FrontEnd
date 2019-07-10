@@ -4,6 +4,7 @@ import classes from './Header.module.css';
 import LogInButton from '../UI/LogInButton/LogInButton';
 import SearchBox from './SearchBox/SearchBox';
 import CategoryList from './CategoryList/CategoryList';
+import { Link } from 'react-router-dom';
 
 
 const header = (props) => {
@@ -15,7 +16,7 @@ const header = (props) => {
                         <SearchBox />
                     </div>
                     <div className="col-md-6 d-flex justify-content-center align-items-center">
-                        <img className={classes.Logo} src={logo} alt="AWARE"></img>
+                        <Link to="/products"><img className={classes.Logo} src={logo} alt="AWARE"></img></Link>
                     </div>
                     <div className="col-md-3 d-flex justify-content-around align-items-center">
                         <span className={classes['register-span']} style={{ display: props.isLogedIn ? 'none' : null}} onClick={props.registerButtonClicked}>Register</span>

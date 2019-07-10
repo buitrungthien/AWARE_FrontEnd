@@ -9,6 +9,7 @@ import axios from 'axios';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import Header from '../../components/Header/Header';
 import Profile from '../../components/Profile/Profile';
+import { Link, Route, Switch } from 'react-router-dom';
 
 class HomePage extends React.Component {
 
@@ -25,7 +26,7 @@ class HomePage extends React.Component {
         isLogedIn: false
     }
 
-    async componentDidMount() {
+    async componentWillMount() {
         if (localStorage.getItem('token')) {
             this.setState((prevState, props) => {
                 return {
@@ -141,13 +142,24 @@ class HomePage extends React.Component {
                     currentUserEmail={this.state.currentUser.email}
                 />
                 <ToastContainer autoClose={1500} />
+
+                {/*above are common components*/}
+
                 <div className="container">
                     <div className="row mt-5">
-                        <Profile
-                            userName={this.state.currentUser.name}
-                            userEmail={this.state.currentUser.email}
-                            userUpdated={(newUserInfo) => {this.updateUserInfo(newUserInfo)}}
-                        />
+                        <Switch>
+                            <Route path="/products" render={() => <h1>This is the product page includes a list of awesome products</h1>} />
+                            <Route
+                                path="/profile"
+                                render={() => <Profile
+                                    isLogedIn={this.state.isLogedIn}
+                                    userName={this.state.currentUser.name}
+                                    userEmail={this.state.currentUser.email}
+                                    userUpdated={(newUserInfo) => { this.updateUserInfo(newUserInfo) }}
+                                    history={this.props.history}
+                                />}
+                            />
+                        </Switch>
                     </div>
                 </div>
                 {
