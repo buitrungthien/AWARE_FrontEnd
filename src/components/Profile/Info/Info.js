@@ -181,12 +181,13 @@ class Info extends React.Component {
                                     elementType={formElement.config.elementType}
                                     elementConfig={formElement.config.elementConfig}
                                     label={formElement.config.label}
-                                    // value={formElement.config.value}
                                     value={formElement.config.touched ? formElement.config.value : formElement.id === 'name' ? this.props.userName : this.props.userEmail}
                                     invalid={!formElement.config.valid}
                                     touched={formElement.config.touched}
                                     errorValidationMessage={formElement.config.errorValidationMessage}
-                                    changed={(event) => this.inputChangedHandler(event, formElement.id)} />
+                                    changed={(event) => this.inputChangedHandler(event, formElement.id)}
+                                    infoType={true}
+                                />
                             ))
                             : null
                     }
@@ -201,7 +202,7 @@ class Info extends React.Component {
                                     </label>
                                 </div>
                                 <div className="col-md-5">
-                                    <FlatButton backGroundColor='#ffa15f' disabled={!this.state.validForm}>Save</FlatButton>
+                                    <FlatButton backgroundColor='#ffa15f' disabled={!this.state.validForm}>Save</FlatButton>
                                 </div>
                             </div>
                             : null

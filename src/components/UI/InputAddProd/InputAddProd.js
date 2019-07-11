@@ -7,15 +7,26 @@ const inputAddProd = (props) => {
     const inputClasses = [classes['input-element']];
 
     switch (props.elementType) {
+        case ('single-select'):
+            inputElement =
+                <div className={inputClasses.join(' ')} style={{ padding: 0, border: 'none' }}>
+                    <Select
+                        className="basic-single"
+                        classNamePrefix="select"
+                        options={props.selectOptions}
+                        onChange={props.changed}
+                    />
+                </div>
+            break;
         case ('multi-select'):
             inputElement =
-                <div className={inputClasses.join(' ')} style={{padding: 0, border: 'none'}}>
+                <div className={inputClasses.join(' ')} style={{ padding: 0, border: 'none' }}>
                     <Select
                         isMulti
-                        // name=""
                         options={props.selectOptions}
                         classNamePrefix="select"
                         className="basic-multi-select"
+                        onChange={props.changed}
                     />
                 </div>;
             break;

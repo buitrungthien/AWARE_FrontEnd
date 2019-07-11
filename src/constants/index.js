@@ -1,13 +1,18 @@
 export const ADD_PRODUCT_FORM_INIT = {
+    imageURL :{
+        elementType: 'input',
+        label: 'IMAGE-URL',
+        value: 'https://placeimg.com/640/480/any'
+    },
     name: {
         elementType: 'input',
         label: 'NAME',
         value: ''
     },
     categoryOfGender: {
-        elementType: 'multi-select',
+        elementType: 'single-select',
         label: 'CATEGORY OF GENDER',
-        value: [],
+        value: '',
         selectOptions: [
             { label: 'Men', value: 'men' },
             { label: 'Ladies', value: 'ladies' },
@@ -16,9 +21,9 @@ export const ADD_PRODUCT_FORM_INIT = {
         ]
     },
     subCategory: {
-        elementType: 'multi-select',
+        elementType: 'single-select',
         label: 'SUB CATEGORY',
-        value: [],
+        value: '',
         selectOptions: [
             { label: 'Tops', value: 'tops' },
             { label: 'Bottoms', value: 'bottoms' },
@@ -36,6 +41,9 @@ export const ADD_PRODUCT_FORM_INIT = {
     },
     price: {
         elementType: 'input',
+        elementConfig: {
+            type: 'number',
+        },
         label: 'PRICE ($)',
         value: ''
     },
@@ -65,6 +73,9 @@ export const ADD_PRODUCT_FORM_INIT = {
     },
     quantity: {
         elementType: 'input',
+        elementConfig: {
+            type: 'number',
+        },
         label: 'QUANTITY',
         value: '',
     },

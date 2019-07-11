@@ -148,7 +148,7 @@ class HomePage extends React.Component {
                 <div className="container">
                     <div className="row mt-5">
                         <Switch>
-                            <Route path="/products" render={() => <h1>This is the product page includes a list of awesome products. Click on the email on the header to see your profile</h1>} />
+                            <Route path="/products" render={() => <h1>This is the product page including a list of awesome products. Click on the email on the header to see your profile</h1>} />
                             <Route
                                 path="/profile"
                                 render={() => <Profile

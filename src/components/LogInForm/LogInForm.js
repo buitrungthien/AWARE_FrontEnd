@@ -16,7 +16,6 @@ class LogInForm extends React.Component {
     }
 
     inputChangedHandler = (event, inputIndentifier) => {
-
         const updatedLogInForm = {
             ...this.state.logInForm
         }
@@ -141,7 +140,7 @@ class LogInForm extends React.Component {
                             errorValidationMessage={formElement.config.errorValidationMessage}
                             changed={(event) => this.inputChangedHandler(event, formElement.id)} />
                     ))}
-                    <FlatButton backGroundColor='#ffa15f' disabled={!this.state.validForm}>Log in</FlatButton>
+                    <FlatButton backgroundColor='#ffa15f' disabled={!this.state.validForm}>Log in</FlatButton>
                     <hr></hr>
                     <span style={{ paddingBottom: 0 }} className={classes['terms-policies']}>
                         Don't have an account?

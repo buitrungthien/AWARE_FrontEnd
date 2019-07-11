@@ -151,7 +151,7 @@ class RegisterForm extends React.Component {
                             and
                         <span className={classes['orange-underline-bold']}> Privacy Policy </span>
                     </span>
-                    <FlatButton backGroundColor='#ffa15f' disabled={!this.state.validForm}>Register</FlatButton>
+                    <FlatButton backgroundColor='#ffa15f' disabled={!this.state.validForm}>Register</FlatButton>
                     <hr></hr>
                     <span style={{paddingBottom: 0}} className={classes['terms-policies']}>
                         Do you have an account?
