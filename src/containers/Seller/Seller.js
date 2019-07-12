@@ -6,8 +6,7 @@ import axios from 'axios';
 
 class Seller extends React.Component {
     state = {
-        isLogedIn: false,
-        doneChecking: false
+        isLogedIn: false
     }
 
     async componentWillMount() {
@@ -22,13 +21,7 @@ class Seller extends React.Component {
                     isLogedIn: true,
                 })
             }
-            this.setState({
-                doneChecking: true
-            });
         }
-        this.setState({
-            doneChecking: true
-        });
     }
 
     storeToken = async (token) => {
@@ -53,19 +46,23 @@ class Seller extends React.Component {
     }
 
     render() {
-        console.log('seller login', this.state.isLogedIn);
-        console.log('seller checking', this.state.doneChecking);
         return (
             <Switch>
-                <Route
-                    path={this.props.match.url + '/dashboard'}
-                    render={() => <DashboardPage 
+                {
+                    this.state.isLogedIn ? 
+                    <Route
+                        path={this.props.match.url + '/dashboard'}
+                        render={() => <DashboardPage 
                                     sellerIsLogedIn={this.state.isLogedIn} 
-                                    history={this.props.history} 
-                                    doneChecking={this.state.doneChecking}/>}
-                />
+                                    history={this.props.history}
+                                    match={this.props.match}
+                                    />}
+                    /> 
+                    : null
+                }
+                
                 <Route 
-                    path={this.props.match.url}
+                    path={this.props.match.url} exact
                     render={() => <LogInPage token={this.storeToken}/>}
                 />
             </Switch>

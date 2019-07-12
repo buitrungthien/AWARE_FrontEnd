@@ -13,7 +13,7 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
 
-@media screen  and (min-width : 1400px) {
+@media screen and (min-width: 1400px) {
   .container {
     min-width: 1311px!important;
   }
@@ -22,4 +22,9 @@ code {
 * {
   font-family: 'Montserrat', sans-serif;
   font-size: 14px;
+}
+
+a {
+  text-decoration: none!important;
+  color: black!important;
 }

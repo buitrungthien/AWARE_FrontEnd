@@ -82,20 +82,20 @@ class LogInPage extends React.Component {
             if (error.response) {
                 this.setState({
                     validForm: false,
-                    messageFromServer: 'Incorrect email or password',
+                    messageFromServer: 'Incorrect email or password!!!',
                     responseStatusFromServer: error.response.status
                 });
             } else if (error.request) {
                 this.setState({
                     validForm: false,
-                    messageFromServer: 'Incorrect email or password',
+                    messageFromServer: 'Incorrect email or password!!!',
                     responseStatusFromServer: error.response.status
                 });
                 console.log(error.request);
             } else {
                 this.setState({
                     validForm: false,
-                    messageFromServer: 'Incorrect email or password',
+                    messageFromServer: 'Incorrect email or password!!!',
                     responseStatusFromServer: error.response.status
                 });
             }

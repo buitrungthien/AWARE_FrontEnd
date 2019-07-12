@@ -8,6 +8,7 @@ const flatButton = (props) => {
             <button
                 type={props.type}
                 disabled={props.disabled}
+                onClick={props.clicked}
                 className={classes['flat-button']}
                 style={{ backgroundColor: props.backgroundColor, color: props.backgroundColor === 'white' ? '#ffa15f' : null }}>
                 {props.children}
