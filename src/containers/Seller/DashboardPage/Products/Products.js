@@ -102,8 +102,8 @@ class Products extends React.Component {
                             />
                         </React.Fragment>
                         : <React.Fragment>
-                            <h1>This is a list of all products seller can see</h1>
                             <button onClick={this.openFormHandler}>Add Product</button>
+                            <h1>This is a list of all products seller can see</h1>
                         </React.Fragment>
                 }
 

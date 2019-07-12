@@ -28,3 +28,13 @@ a {
   text-decoration: none!important;
   color: black!important;
 }
+
+div.select__control {
+  border-radius: 0;
+  border: solid 1px #ededed;
+  padding: 8px 10px;
+}
+
+div.select__control div {
+  cursor: pointer;
+}
