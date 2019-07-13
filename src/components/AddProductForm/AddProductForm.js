@@ -1,6 +1,7 @@
 import React from 'react';
-import InputAddProd from '../../../../../components/UI/InputAddProd';
-import FlatButton from '../../../../../components/UI/FlatButton';
+import InputAddProd from '../UI/InputAddProd';
+import FlatButton from '../UI/FlatButton';
+import AddImages from './AddImages';
 
 const addProductForm = (props) => {
     const formElementsArray = [];
@@ -12,6 +13,7 @@ const addProductForm = (props) => {
     }
     return (
         <form onSubmit={props.addProductHandler}>
+            <AddImages />
             {formElementsArray.map(formElement => (
                 <InputAddProd
                     key={formElement.id}

@@ -13,6 +13,7 @@ class DashboardPage extends React.Component {
         if (!this.props.sellerIsLogedIn) {
             this.props.history.replace('/seller');
         }
+        this.props.history.push('/seller/dashboard/products');
     }
 
     componentDidUpdate() {

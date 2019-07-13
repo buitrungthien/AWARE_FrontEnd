@@ -1,0 +1,56 @@
+.outer-box {
+    background-color: white;
+    box-sizing: border-box;
+    border: dashed 1px gray;
+    width: 100%;
+    position: relative;
+    height: 200px;
+}
+
+.outer-box:hover {
+    box-shadow: 2px 2px 2px 2px lightgray;
+}
+
+.input {
+    position: absolute;
+    top: -1000px;
+}
+
+.label {
+    position: absolute;
+    top: 50%;
+    display: block;
+    width: 100%;
+    text-align: center;
+    color: #acacac;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.img {
+    display: block;
+    margin: auto;
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.clothe-image {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+}
+
+.close-icon {
+    position: absolute;
+    right: 0;
+    top: 0;
+    cursor: pointer;
+}
+
+@media screen and (min-width: 1400px) {
+    .outer-box {
+        height: 270px;
+    }
+}

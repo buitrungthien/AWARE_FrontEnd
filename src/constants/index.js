@@ -1,9 +1,6 @@
+export const MAX_QUANTITY_OF_IMAGES_PER_PRODUCT = 4;
+
 export const ADD_PRODUCT_FORM_INIT = {
-    imageURL :{
-        elementType: 'input',
-        label: 'IMAGE-URL',
-        value: 'https://placeimg.com/640/480/any'
-    },
     name: {
         elementType: 'input',
         label: 'NAME',

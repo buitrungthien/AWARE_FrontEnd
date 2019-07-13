@@ -3,7 +3,7 @@ import * as CommonConstants from '../../../../constants/index';
 import axios from 'axios';
 import classes from './Products.module.css';
 import { ToastContainer, toast } from 'react-toastify';
-import AddProductForm from './AddProductForm';
+import AddProductForm from '../../../../components/AddProductForm';
 
 class Products extends React.Component {
     state = {
