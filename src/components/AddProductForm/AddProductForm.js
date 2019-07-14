@@ -76,25 +76,26 @@ class AddProductForm extends React.Component {
     addProductHandler = async (event) => {
         event.preventDefault();
         let formData = {};
+        formData.images = this.state.images;
         for (let formElementIdentifier in this.state.addProductForm) {
             formData[formElementIdentifier] = this.state.addProductForm[formElementIdentifier].value;
         }
         console.log(formData);
         try {
-            await axios.post('http://localhost:5000/api/products', { ...formData }, {
+            await axios.post('http://localhost:5000/api/products', formData, {
                 headers: {
                     'x-auth-token': localStorage.getItem('token')
                 }
             });
             this.setState({
-                addProductForm: ADD_PRODUCT_FORM_INIT,
-                messageFromServer: 'Added product successfully!!!'
+                messageFromServer: 'Added product successfully!!!',
+                images: []
             });
             this.notify(this.state.messageFromServer, true);
         } catch (error) {
             if (error.response) {
                 this.setState({
-                    messageFromServer: error.response.data,
+                    messageFromServer: error.response.data.message,
                 });
                 this.notify(this.state.messageFromServer, false);
             } else if (error.request) {
@@ -120,7 +121,7 @@ class AddProductForm extends React.Component {
         return (
             <React.Fragment>
                 <ToastContainer autoClose={1500} />
-                <form onSubmit={this.state.addProductHandler}>
+                <form onSubmit={this.addProductHandler}>
                     <Buttons onChange={this.imageOnChange} onDelete={this.removeImage} productImages={this.state.images} />
                     {formElementsArray.map(formElement => (
                         <InputAddProd

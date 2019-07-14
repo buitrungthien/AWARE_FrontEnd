@@ -12,7 +12,7 @@ const buttons = (props) => {
                 <div className={classes['outer-box']}>
                     <label htmlFor={`single1${i}`} className={classes['label']}>
                         <img src={addIcon} alt="" className={classes['img']} />
-                        Add product
+                        Add photo
                     </label>
                     <input type='file' id={`single1${i}`} onChange={props.onChange} className={classes['input']} />
                     {props.productImages[i] ? <img src={'http://localhost:5000/' + props.productImages[i]} alt="" className={classes['clothe-image']} /> : null}
