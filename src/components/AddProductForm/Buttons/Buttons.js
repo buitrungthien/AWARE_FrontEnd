@@ -1,8 +1,8 @@
 import React from 'react';
 import classes from './Buttons.module.css';
-import addIcon from '../../../../assets/images/icons/add.svg';
-import closeIcon from '../../../../assets/images/icons/close-1.svg';
-import { MAX_QUANTITY_OF_IMAGES_PER_PRODUCT } from '../../../../constants/index';
+import addIcon from '../../../assets/images/icons/add.svg';
+import closeIcon from '../../../assets/images/icons/close-1.svg';
+import { MAX_QUANTITY_OF_IMAGES_PER_PRODUCT } from '../../../constants/index';
 
 const buttons = (props) => {
     let imageUpload = [];
