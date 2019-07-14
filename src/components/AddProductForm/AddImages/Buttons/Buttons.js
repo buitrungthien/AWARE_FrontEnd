@@ -15,8 +15,8 @@ const buttons = (props) => {
                         Add product
                     </label>
                     <input type='file' id={`single1${i}`} onChange={props.onChange} className={classes['input']} />
-                    {props.productImages[i] ? <img src={props.productImages[i]} alt="" className={classes['clothe-image']} /> : null}
-                    {props.productImages[i] ? <img src={closeIcon} onClick={() => props.onDelete(i)} alt="" className={classes['close-icon']} /> : null}
+                    {props.productImages[i] ? <img src={'http://localhost:5000/' + props.productImages[i]} alt="" className={classes['clothe-image']} /> : null}
+                    {props.productImages[i] ? <img src={closeIcon} onClick={() => props.onDelete(i, props.productImages[i])} alt="" className={classes['close-icon']} /> : null}
                 </div>
             </div >
         );

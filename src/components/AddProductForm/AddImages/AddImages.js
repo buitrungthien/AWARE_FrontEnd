@@ -14,28 +14,37 @@ class AddImages extends Component {
         e.target.value = null; // this is a BIG TRICK, reset the input file type to null
         const formData = new FormData();
         formData.append('productImage', files[0]);
+        const token = localStorage.getItem('token');
         const response = await axios.post('http://localhost:5000/api/products/images', formData, {
-            header: {
-                'content-type': 'multipart/form-data'
+            headers: {
+                'content-type': 'multipart/form-data',
+                'x-auth-token': token
             }
         });
         if (response) {
             let responseData = [...this.state.images];
-            responseData.push(response.data);
+            const imgPath = response.data;
+            responseData.push(imgPath);
             this.setState({
                 images: responseData
             });
-            // console.log(this.state.images);
         }
     }
 
-    removeImage = async index => {
-        let result = [...this.state.images];
-        result.splice(index, 1);
-        await this.setState({
-            images: result
-        })
-        console.log(this.state.images);
+    removeImage = async (index, imgPath) => {
+        const response = await axios.delete('http://localhost:5000/api/products/images', {
+            headers: {
+                'x-auth-token': localStorage.getItem('token'),
+                imgPath: imgPath
+            }
+        });
+        if (response) {
+            let result = [...this.state.images];
+            result.splice(index, 1);
+            this.setState({
+                images: result
+            });
+        }
     }
 
     render() {
