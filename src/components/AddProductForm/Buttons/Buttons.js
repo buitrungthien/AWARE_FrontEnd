@@ -8,26 +8,29 @@ const buttons = (props) => {
     let imageUpload = [];
     for (let i = 0; i < MAX_QUANTITY_OF_IMAGES_PER_PRODUCT; i++) {
         imageUpload.push(
-            <div className="col-md-3" key={i}>
-                <div className={classes['outer-box']}>
-                    <label htmlFor={`single1${i}`} className={classes['label']}>
-                        <img src={addIcon} alt="" className={classes['img']} />
-                        Add photo
+            <div className={classes['outer-box']} key={i}>
+                <label htmlFor={`single1${i}`} className={classes['label']}>
+                    <img src={addIcon} alt="" className={classes['img']} />
+                    Add photo
                     </label>
-                    <input type='file' id={`single1${i}`} onChange={props.onChange} className={classes['input']} />
-                    {props.productImages[i] ? <img src={'http://localhost:5000/' + props.productImages[i]} alt="" className={classes['clothe-image']} /> : null}
-                    {props.productImages[i] ? <img src={closeIcon} onClick={() => props.onDelete(i, props.productImages[i])} alt="" className={classes['close-icon']} /> : null}
-                </div>
-            </div >
+                <input type='file' id={`single1${i}`} onChange={props.onChange} className={classes['input']} />
+                {props.productImages[i] ? <img src={'http://localhost:5000/' + props.productImages[i]} alt="" className={classes['clothe-image']} /> : null}
+                {props.productImages[i] ? <img src={closeIcon} onClick={() => props.onDelete(i, props.productImages[i])} alt="" className={classes['close-icon']} /> : null}
+            </div>
         );
     }
 
     return (
-        <div className="col-md-8 offset-md-2">
-            <div className="row">
+        <div className={classes['box-four-buttons']}>
+            <div style={{
+                width: '80%',
+                float: 'right',
+                display: 'flex',
+                justifyContent: 'space-between'
+            }}>
                 {imageUpload}
             </div>
-        </div>
+        </div >
     );
 }
 

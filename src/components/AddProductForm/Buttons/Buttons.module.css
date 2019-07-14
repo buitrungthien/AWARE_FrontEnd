@@ -2,7 +2,8 @@
     background-color: white;
     box-sizing: border-box;
     border: dashed 1px gray;
-    width: 100%;
+    width: 22%;
+    float: left;
     position: relative;
     height: 200px;
 }
@@ -47,6 +48,10 @@
     right: 0;
     top: 0;
     cursor: pointer;
+}
+
+.box-four-buttons {
+    width: 85%;
 }
 
 @media screen and (min-width: 1400px) {
