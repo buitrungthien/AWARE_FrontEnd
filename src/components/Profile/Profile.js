@@ -2,6 +2,7 @@ import React from 'react';
 import classes from './Profile.module.css';
 import Info from './Info/Info';
 import { ToastContainer, toast } from 'react-toastify';
+import { NavLink } from 'react-router-dom';
 
 class Profile extends React.Component {
     state = {
@@ -36,10 +37,10 @@ class Profile extends React.Component {
                 <ToastContainer autoClose={1500} />
                 <div className="col-md-3 d-flex flex-column">
                     <h2 style={{ marginBottom: '20px' }}>My Account</h2>
-                    <span className={classes['account-control-element']}>Account setting</span>
+                    <NavLink activeClassName="is-active" to='/profile'><span className={classes['account-control-element']}>Account setting</span></NavLink>
                     <span className={classes['account-control-element']}>Change password</span>
                 </div>
-                <div className={this.state.editing ? "col-md-5" : "col-md-4"}>
+                <div className={this.state.editing ? "col-md-5" : "col-md-4"} style={{marginBottom: '150px'}}>
                     <Info
                         toggleEdit={this.editingHandler}
                         editing={this.state.editing}

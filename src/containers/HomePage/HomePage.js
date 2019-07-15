@@ -10,6 +10,8 @@ import Spinner from '../../components/UI/Spinner/Spinner';
 import Header from '../../components/Header/Header';
 import Profile from '../../components/Profile/Profile';
 import { Route, Switch, Redirect } from 'react-router-dom';
+import Dashboard from '../../components/Dashboard';
+import Footer from '../../components/Footer';
 
 class HomePage extends React.Component {
 
@@ -148,7 +150,7 @@ class HomePage extends React.Component {
                 <div className="container">
                     <div className="row mt-5">
                         <Switch>
-                            <Route path="/products" render={() => <h1>This is the product page including a list of awesome products. Click on the email on the header to see your profile</h1>} />
+                            <Route path="/dashboard" component={Dashboard} />
                             <Route
                                 path="/profile"
                                 render={() => <Profile
@@ -159,7 +161,7 @@ class HomePage extends React.Component {
                                     history={this.props.history}
                                 />}
                             />
-                            <Redirect from="/" to="/products" />
+                            <Redirect from="/" to="/dashboard" />
                         </Switch>
                     </div>
                 </div>
@@ -181,6 +183,7 @@ class HomePage extends React.Component {
                         </Modal>
                         : null
                 }
+                <Footer />
             </React.Fragment>
         );
     }

@@ -13,7 +13,7 @@ const buttons = (props) => {
                     <img src={addIcon} alt="" className={classes['img']} />
                     Add photo
                     </label>
-                <input type='file' id={`single1${i}`} onChange={props.onChange} className={classes['input']} />
+                <input type='file' id={`single1${i}`} onChange={props.onChange} className={classes['input']} accept="image/jpeg, image/png" />
                 {props.productImages[i] ? <img src={'http://localhost:5000/' + props.productImages[i]} alt="" className={classes['clothe-image']} /> : null}
                 {props.productImages[i] ? <img src={closeIcon} onClick={() => props.onDelete(i, props.productImages[i])} alt="" className={classes['close-icon']} /> : null}
             </div>

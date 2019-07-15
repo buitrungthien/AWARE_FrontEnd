@@ -1,0 +1,41 @@
+.category-box {
+    position: relative;
+    width: 100%;
+}
+
+.category-item {
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.hover-block {
+    text-align: center;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%);
+    max-width: 620px;
+    z-index: 50;
+    padding: 16.5px;
+    display: none;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.08);
+    border: solid 0.5px #eaeaea;
+    background-color: #fbfbfb;
+}
+
+.category-item:hover div.hover-block {
+    display: block;
+}
+
+.list {
+    padding: 0;
+    margin: 0;
+    max-width: 100%;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+}
+
+.list-item {
+    display: inline-block;
+    padding: 0 15px;
+}

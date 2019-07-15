@@ -1,0 +1,39 @@
+.footer {
+    border-top: solid 2px lightgray;
+    margin-top: 37px;
+}
+
+.list {
+    display: block;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+.list-item {
+    display: inline-block;
+    margin: 0 20px;
+    color: #b7b7b7;
+    cursor: pointer;
+}
+
+.small {
+    font-size: 12px;
+    margin: 0;
+    margin-right: 20px;
+}
+
+.society-list {
+    list-style: none;
+    display: block;
+    margin: 0;
+    padding: 0;
+    text-align: right;
+}
+
+.society-list-item {
+    display: inline-block;
+    margin-left: 20px;
+    cursor: pointer;
+}
