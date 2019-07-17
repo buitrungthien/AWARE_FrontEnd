@@ -16,7 +16,7 @@ const header = (props) => {
                         <SearchBox />
                     </div>
                     <div className="col-md-6 d-flex justify-content-center align-items-center">
-                        <Link to="/products"><img className={classes.Logo} src={logo} alt="AWARE"></img></Link>
+                        <Link to="/dashboard"><img className={classes.Logo} src={logo} alt="AWARE"></img></Link>
                     </div>
                     <div className="col-md-3 d-flex justify-content-around align-items-center">
                         <span className={classes['register-span']} style={{ display: props.isLogedIn ? 'none' : null }} onClick={props.registerButtonClicked}>Register</span>
@@ -35,6 +35,7 @@ const header = (props) => {
                     <CategoryList />
                 </div>
             </div>
+            <hr style={{marginBottom: '-18px', marginTop: '-10px', boxShadow: '0 1px 4px 0 rgba(0, 0, 0, 0.08)'}}/>
         </div>
     );
 };

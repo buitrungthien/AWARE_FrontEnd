@@ -1,3 +1,15 @@
+
+export const CATEGORIES = [
+    { name: 'All' },
+    { name: 'Casual' },
+    { name: 'Going out' },
+    { name: 'Party' },
+    { name: 'Ocassion' },
+    { name: 'Mini' },
+    { name: 'Maxi' },
+    { name: 'Sets' }
+];
+
 export const MAX_QUANTITY_OF_IMAGES_PER_PRODUCT = 4;
 
 export const ADD_PRODUCT_FORM_INIT = {
@@ -6,29 +18,29 @@ export const ADD_PRODUCT_FORM_INIT = {
         label: 'NAME',
         value: ''
     },
-    categoryOfGender: {
-        elementType: 'single-select',
-        label: 'CATEGORY OF GENDER',
-        value: '',
+    categories: {
+        elementType: 'multi-select',
+        label: 'CATEGORIES',
+        value: [],
         selectOptions: [
             { label: 'Men', value: 'men' },
             { label: 'Ladies', value: 'ladies' },
             { label: 'Girls', value: 'girls' },
-            { label: 'Boys', value: 'boys' }
-        ]
-    },
-    subCategory: {
-        elementType: 'single-select',
-        label: 'SUB CATEGORY',
-        value: '',
-        selectOptions: [
+            { label: 'Boys', value: 'boys' },
             { label: 'Tops', value: 'tops' },
             { label: 'Bottoms', value: 'bottoms' },
             { label: 'Dresses', value: 'dresses' },
             { label: 'Jackets', value: 'jackets' },
             { label: 'Shoes', value: 'shoes' },
             { label: 'Accesories', value: 'accesories' },
-            { label: 'Sale', value: 'sale' }
+            { label: 'Sale', value: 'sale' },
+            { label: 'Casual', value: 'casual'},
+            { label: 'Going out', value: 'going out'},
+            { label: 'Party', value: 'party'},
+            { label: 'Ocassion', value: 'ocassion'},
+            { label: 'Mini', value: 'mini'},
+            { label: 'Maxi', value: 'maxi'},
+            { label: 'Sets', value: 'sets'}
         ]
     },
     brand: {

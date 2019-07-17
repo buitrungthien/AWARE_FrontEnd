@@ -6,6 +6,12 @@
 .category-item {
     font-weight: 500;
     cursor: pointer;
+    display: inline-block;
+    padding-bottom: 20px;
+}
+
+.category-item:hover {
+    color: #ffa15f;
 }
 
 .hover-block {
@@ -38,4 +44,12 @@
 .list-item {
     display: inline-block;
     padding: 0 15px;
+}
+
+.transparent-box {
+    padding-top: 20px;
+    z-index: 50;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%);
 }

@@ -12,6 +12,7 @@ import Profile from '../../components/Profile/Profile';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import Dashboard from '../../components/Dashboard';
 import Footer from '../../components/Footer';
+import Products from '../../components/Products';
 
 class HomePage extends React.Component {
 
@@ -161,6 +162,7 @@ class HomePage extends React.Component {
                                     history={this.props.history}
                                 />}
                             />
+                            <Route path="/products" component={Products} />
                             <Redirect from="/" to="/dashboard" />
                         </Switch>
                     </div>

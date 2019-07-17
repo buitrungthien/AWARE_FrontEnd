@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 
 const footer = (props) => (
     <div className={classes['footer']}>
-        <div className="container" style={{ padding: '52px 0', borderBottom: 'solid 1px lightgray' }}>
+        <div className="container" style={{ paddingTop: '52px'}}>
             <div className="row">
                 <div className="col-md-3">
                     <Link to='/'><img src={logo} alt='' /></Link>
@@ -30,21 +30,22 @@ const footer = (props) => (
                         <li className={classes['society-list-item']}><img src={instagram} alt='' /></li>
                     </ul>
                 </div>
+                <div className="col-md-12" style={{marginTop: '49px'}}>
+                    <hr />
+                </div>
             </div>
         </div>
         <div className="container" style={{ paddingTop: '15px', paddingBottom: '15px' }}>
             <div className="row">
                 <div className="col-md-6">
-                    <div className="row">
-                        <ul className={classes['list']}>
-                            <Link to="/"><li className={classes['list-item'] + ' ' + classes['small']}>Home</li></Link>
-                            <li className={classes['list-item'] + ' ' + classes['small']}>Products</li>
-                            <li className={classes['list-item'] + ' ' + classes['small']}>Services</li>
-                            <li className={classes['list-item'] + ' ' + classes['small']}>About Us</li>
-                            <li className={classes['list-item'] + ' ' + classes['small']}>Help</li>
-                            <li className={classes['list-item'] + ' ' + classes['small']}>Contacts</li>
-                        </ul>
-                    </div>
+                    <ul className={classes['list-bottom']}>
+                        <Link to="/"><li className={classes['list-item'] + ' ' + classes['small']}>Home</li></Link>
+                        <li className={classes['list-item'] + ' ' + classes['small']}>Products</li>
+                        <li className={classes['list-item'] + ' ' + classes['small']}>Services</li>
+                        <li className={classes['list-item'] + ' ' + classes['small']}>About Us</li>
+                        <li className={classes['list-item'] + ' ' + classes['small']}>Help</li>
+                        <li className={classes['list-item'] + ' ' + classes['small']}>Contacts</li>
+                    </ul>
                 </div>
                 <div className="col-md-6">
                     <div className='row d-flex justify-content-end'>
