@@ -2,9 +2,10 @@ import React from 'react';
 import classes from './Products.module.css';
 import { CATEGORIES } from '../../constants/index';
 import queryString from 'query-string';
-import { Link } from 'react-router-dom';
+import { Link, Switch, Route } from 'react-router-dom';
 import axios from 'axios';
 import arrowIcon from '../../assets/images/icons/arrow.svg';
+import ProductDetails from './ProductDetails';
 
 class Products extends React.Component {
 
@@ -19,7 +20,8 @@ class Products extends React.Component {
 
     categoryClickedHandler = async (categoryName) => {
         await this.setState({
-            category: categoryName
+            category: categoryName,
+            pageNumber: 1
         });
         this.gettingProductsHandler();
     }
@@ -55,7 +57,6 @@ class Products extends React.Component {
             products: response.data.products,
             totalPages: response.data.totalPages
         });
-        console.log(this.state.products, this.state.totalPages);
     }
 
     componentWillMount = async () => {
@@ -73,8 +74,8 @@ class Products extends React.Component {
             const gender = queryString.parse(this.props.location.search).gender ? queryString.parse(this.props.location.search).gender : '';
             const subcategory = queryString.parse(this.props.location.search).subcategory ? queryString.parse(this.props.location.search).subcategory : '';
             await this.setState({
-                gender: gender,
-                subcategory: subcategory
+                gender: gender ? gender : this.state.gender,
+                subcategory: subcategory ? subcategory : this.state.subcategory
             });
             this.gettingProductsHandler();
         }
@@ -108,12 +109,65 @@ class Products extends React.Component {
             const price = product.price.toFixed(2);
             return (
                 <div key={i} className={classes['product-box']}>
-                    <img className={classes['product-image']} src={`http://localhost:5000/${product.images[0]}`} alt="" />
+                    <div className={classes['img-frame']}>
+                        <img className={classes['product-image']} src={`http://localhost:5000/${product.images[0]}`} alt="" />
+                        <Link
+                            to={{
+                                pathname: `/products/${product['_id']}`
+                            }}>
+                            <div className={classes['quick-shop']}>
+                                + Quick shop
+                            </div>
+                        </Link>
+                    </div>
                     <p className={classes['product-name']}>{`${product.name} ${subcategory}`}</p>
                     <p className={classes['price']}>${price}</p>
                 </div>
             );
         });
+
+        const allProducts =
+            <React.Fragment>
+                <div className="col-md-2">
+                    <strong>Category</strong>
+                    <ul className={classes['category-list']}>
+                        {categoryItem}
+                    </ul>
+                </div>
+                {
+                    !products.length ?
+                        <h6 className={classes['no-result']}>No result found</h6>
+                        :
+                        <div className="col-md-10">
+                            <div className="row" style={{ marginBottom: '10px' }}>
+                                <div className="col-md-12" style={{ position: 'relative' }}>
+                                    <div className={classes['twenty-p-element-upper']} style={{ display: 'inline-block' }}>
+                                        Sort dropdown button
+                                        </div>
+                                    <div className={classes['twenty-p-element-upper']} style={{ display: 'inline-block', textAlign: 'right', float: 'right' }}>
+                                        <img onClick={this.pageDecreaseHandler} className={classes['rotate-left']} src={arrowIcon} alt="" />
+                                        {this.state.pageNumber}/{this.state.totalPages}
+                                        <img onClick={this.pageIncreaseHandler} className={classes['rotate-right']} src={arrowIcon} alt="" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="row">
+                                <div className="col-md-12 d-flex justify-content-between flex-wrap">
+                                    {products}
+                                </div>
+                            </div>
+                            <div className="row">
+                                <div className="col-md-12" style={{ position: 'relative' }}>
+                                    <div className={classes['twenty-p-element-upper']} style={{ display: 'inline-block', textAlign: 'right', float: 'right' }}>
+                                        <img onClick={this.pageDecreaseHandler} className={classes['rotate-left']} src={arrowIcon} alt="" />
+                                        {this.state.pageNumber}/{this.state.totalPages}
+                                        <img onClick={this.pageIncreaseHandler} className={classes['rotate-right']} src={arrowIcon} alt="" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                }
+            </React.Fragment>
 
         return (
             <React.Fragment>
@@ -121,46 +175,10 @@ class Products extends React.Component {
                     <div className="col-md-12">
                         <span className={classes['category-text']}>{categoryText}</span>
                     </div>
-                    <div className="col-md-2">
-                        <strong>Category</strong>
-                        <ul className={classes['category-list']}>
-                            {categoryItem}
-                        </ul>
-                    </div>
-                    {
-                        !products.length ?
-                            <h6 className={classes['no-result']}>No result found</h6>
-                            :
-                            <div className="col-md-10">
-                                <div className="row" style={{ marginBottom: '10px' }}>
-                                    <div className="col-md-12" style={{ position: 'relative' }}>
-                                        <div className={classes['twenty-p-element-upper']} style={{ display: 'inline-block' }}>
-                                            Sort dropdown button
-                                        </div>
-                                        <div className={classes['twenty-p-element-upper']} style={{ display: 'inline-block', textAlign: 'right', float: 'right' }}>
-                                            <img onClick={this.pageDecreaseHandler} className={classes['rotate-left']} src={arrowIcon} alt="" />
-                                            {this.state.pageNumber}/{this.state.totalPages}
-                                            <img onClick={this.pageIncreaseHandler} className={classes['rotate-right']} src={arrowIcon} alt="" />
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="row">
-                                    <div className="col-md-12 d-flex justify-content-between flex-wrap">
-                                        {products}
-                                    </div>
-                                </div>
-                                <div className="row">
-                                    <div className="col-md-12" style={{ position: 'relative' }}>
-                                        <div className={classes['twenty-p-element-upper']} style={{ display: 'inline-block', textAlign: 'right', float: 'right' }}>
-                                            <img onClick={this.pageDecreaseHandler} className={classes['rotate-left']} src={arrowIcon} alt="" />
-                                            {this.state.pageNumber}/{this.state.totalPages}
-                                            <img onClick={this.pageIncreaseHandler} className={classes['rotate-right']} src={arrowIcon} alt="" />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                    }
-
+                    <Switch>
+                        <Route path="/products/:id" component={ProductDetails} />
+                        <Route path="/products" render={() => allProducts} />
+                    </Switch>
                 </React.Fragment>
             </React.Fragment>
         );

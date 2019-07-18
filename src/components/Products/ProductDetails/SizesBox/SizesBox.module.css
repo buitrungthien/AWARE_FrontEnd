@@ -1,0 +1,22 @@
+.label {
+    font-weight: 500;
+    line-height: 1.57;
+    color: #202124;
+    margin-top: 20px;
+}
+
+.size-box {
+    width: 40px;
+    height: 40px;
+    border: solid 1px #808080;
+    margin-right: 16px;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 40px;
+    cursor: pointer;
+}
+
+.size-box:hover {
+    color: white;
+    background-color: #ffa15f;
+}
