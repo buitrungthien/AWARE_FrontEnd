@@ -135,10 +135,10 @@ class AddProductForm extends React.Component {
                         />
                     ))}
                     <div style={{ width: '85%', marginLeft: '10px', marginBottom: '20px' }} className="d-flex justify-content-end">
-                        <div style={{ width: '180px' }}>
+                        <div style={{ width: '180px', padding: "10px" }}>
                             <FlatButton clicked={this.props.closeFormHandler} type="button" backgroundColor="white">Cancel</FlatButton>
                         </div>
-                        <div style={{ width: '180px' }}>
+                        <div style={{ width: '180px', padding: "10px" }}>
                             <FlatButton backgroundColor="#ffa15f">Complete</FlatButton>
                         </div>
                     </div>

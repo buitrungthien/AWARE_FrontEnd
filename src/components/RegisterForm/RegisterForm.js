@@ -119,8 +119,8 @@ class RegisterForm extends React.Component {
         }
         return (
             <React.Fragment>
-                <Spinner display={this.state.formLoading ? 'block' : 'none'}/>
-                <form style={{visibility: this.state.formLoading ? 'hidden' : null}}
+                <Spinner display={this.state.formLoading ? 'block' : 'none'} />
+                <form style={{ visibility: this.state.formLoading ? 'hidden' : null }}
                     className={classes['form']}
                     onSubmit={this.registerHandler}
                 >
@@ -148,12 +148,14 @@ class RegisterForm extends React.Component {
                         className={classes['terms-policies']}>
                         By creating an account you agree to the
                         <span className={classes['orange-underline-bold']}> Terms of Service </span>
-                            and
+                        and
                         <span className={classes['orange-underline-bold']}> Privacy Policy </span>
                     </span>
-                    <FlatButton backgroundColor='#ffa15f' disabled={!this.state.validForm}>Register</FlatButton>
+                    <div style={{padding: '10px'}}>
+                        <FlatButton backgroundColor='#ffa15f' disabled={!this.state.validForm}>Register</FlatButton>
+                    </div>
                     <hr></hr>
-                    <span style={{paddingBottom: 0}} className={classes['terms-policies']}>
+                    <span style={{ paddingBottom: 0 }} className={classes['terms-policies']}>
                         Do you have an account?
                         <span
                             onClick={this.props.changeForm}

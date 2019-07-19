@@ -1,0 +1,20 @@
+.label {
+    display: inline-block;
+    margin-right: 21px;
+    font-weight: 500;
+    line-height: 1.57;
+    color: #202124;
+}
+
+.quantity-control-box {
+    width: 108px;
+    height: 42px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border: solid 2px lightgray;
+}
+
+.quantity-control-icon {
+    cursor: pointer;
+}

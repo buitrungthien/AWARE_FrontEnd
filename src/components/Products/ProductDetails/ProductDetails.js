@@ -5,12 +5,18 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import SizesBox from './SizesBox';
 import ColorsBox from './ColorsBox';
+import QuantityBox from './QuantityBox';
+import FlatButton from '../../UI/FlatButton';
+import { AppContext } from '../../../containers/HomePage/HomePage';
 
 class ProductDetails extends React.Component {
     state = {
         product: { images: [], price: 0 },
         chosenImage: '',
-        moreFrom: []
+        moreFrom: [],
+        chosenSize: '',
+        chosenColor: '',
+        chosenQuantity: 1
     }
 
     componentWillMount = async () => {
@@ -20,7 +26,9 @@ class ProductDetails extends React.Component {
         await this.setState({
             product: response.data.product,
             chosenImage: response.data.product.images[0],
-            moreFrom: response.data.moreFrom
+            moreFrom: response.data.moreFrom,
+            chosenSize: response.data.product.sizes[0],
+            chosenColor: response.data.product.colors[0]
         });
     }
 
@@ -40,6 +48,38 @@ class ProductDetails extends React.Component {
     setChosenImage(index) {
         this.setState({
             chosenImage: this.state.product.images[index]
+        });
+    }
+
+    increaseQuantityHandler = () => {
+        if (this.state.chosenQuantity + 1 <= this.state.product.remain) {
+            this.setState((prevState, props) => {
+                return {
+                    chosenQuantity: prevState.chosenQuantity + 1
+                }
+            });
+        }
+    }
+
+    decreaseQuantityHandler = () => {
+        if (this.state.chosenQuantity - 1 > 0) {
+            this.setState((prevState, props) => {
+                return {
+                    chosenQuantity: prevState.chosenQuantity - 1
+                }
+            });
+        }
+    }
+
+    pickColorHandler = (color) => {
+        this.setState({
+            chosenColor: color
+        });
+    }
+
+    choseSizeHandler = (size) => {
+        this.setState({
+            chosenSize: size
         });
     }
 
@@ -67,34 +107,80 @@ class ProductDetails extends React.Component {
         });
         const { product, chosenImage } = this.state;
         const price = this.state.product.price.toFixed(2);
+
         return (
-            <div className="col-md-12" style={{ marginTop: '32px' }}>
-                <div className="row">
-                    <div className="col-md-1 d-flex flex-column">
-                        {smallImages}
-                    </div>
-                    <div className="col-md-10">
-                        <div className="row">
-                            <div className="col-md-6">
-                                <div className={classes['big-image-frame']}>
-                                    <img className={classes['big-image']} src={`http://localhost:5000/${chosenImage}`} alt="" />
+            <AppContext.Consumer>
+                {cartContext => {
+                    return (
+                        <div className="col-md-12" style={{ marginTop: '32px' }}>
+                            <div className="row">
+                                <div className="col-md-1 d-flex flex-column">
+                                    {smallImages}
+                                </div>
+                                <div className="col-md-10">
+                                    <div className="row">
+                                        <div className="col-md-6">
+                                            <div className={classes['big-image-frame']}>
+                                                <img className={classes['big-image']} src={`http://localhost:5000/${chosenImage}`} alt="" />
+                                            </div>
+                                        </div>
+                                        <div className="col-md-6">
+                                            <span className={classes['product-name']}>{product.name}</span>
+                                            <span className={classes['product-price']}>${price}</span>
+                                            <div className={classes['outer-box']}>
+                                                <SizesBox
+                                                    sizes={product.sizes}
+                                                    chosenSize={this.state.chosenSize}
+                                                    onClick={this.choseSizeHandler} />
+                                            </div>
+                                            <div className={classes['outer-box']}>
+                                                <ColorsBox
+                                                    chosenColor={this.state.chosenColor}
+                                                    colors={product.colors}
+                                                    onClick={this.pickColorHandler} />
+                                            </div>
+                                            <div className={classes['outer-box']}>
+                                                <QuantityBox
+                                                    increase={this.increaseQuantityHandler}
+                                                    decrease={this.decreaseQuantityHandler}
+                                                    quantity={this.state.chosenQuantity}
+                                                />
+                                            </div>
+                                            <div className={classes['outer-box']}>
+                                                <FlatButton
+                                                    backgroundColor="#5f6dff"
+                                                    clicked={() => {
+                                                        cartContext.addProductToCartHandler({
+                                                            productImage: product.images[0],
+                                                            productName: product.name,
+                                                            productBrand: product.brand,
+                                                            productPrice: product.price,
+                                                            productID: product._id,
+                                                            chosenSize: this.state.chosenSize,
+                                                            chosenColor: this.state.chosenColor,
+                                                            chosenQuantity: this.state.chosenQuantity
+                                                        })
+                                                    }}
+                                                >
+                                                    Add to cart
+                                                </FlatButton>
+                                            </div>
+                                            <br />
+                                            <hr className={classes['hr']} />
+                                            <p>{product.description}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="col-md-1 d-flex flex-column">
+                                    <p className={classes['more-from']}>More from</p>
+                                    <p className={classes['brand']}>{product.brand}</p>
+                                    {moreFrom}
                                 </div>
                             </div>
-                            <div className="col-md-6">
-                                <span className={classes['product-name']}>{product.name}</span>
-                                <span className={classes['product-price']}>${price}</span>
-                                <SizesBox sizes={product.sizes}/>
-                                <ColorsBox colors={product.colors}/>
-                            </div>
                         </div>
-                    </div>
-                    <div className="col-md-1 d-flex flex-column">
-                        <p className={classes['more-from']}>More from</p>
-                        <p className={classes['brand']}>{product.brand}</p>
-                        {moreFrom}
-                    </div>
-                </div>
-            </div>
+                    );
+                }}
+            </AppContext.Consumer>
         );
     }
 };

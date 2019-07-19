@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { createContext } from 'react';
 import * as CommonConstants from '../../constants/index';
 import Modal from '../../components/UI/Modal/Modal';
 import RegisterForm from '../../components/RegisterForm/RegisterForm';
@@ -14,6 +14,7 @@ import Dashboard from '../../components/Dashboard';
 import Footer from '../../components/Footer';
 import Products from '../../components/Products';
 
+export const AppContext = createContext();
 class HomePage extends React.Component {
 
     state = {
@@ -26,7 +27,8 @@ class HomePage extends React.Component {
             name: '',
             email: ''
         },
-        isLogedIn: false
+        isLogedIn: false,
+        productsInCart: []
     }
 
     async componentWillMount() {
@@ -64,6 +66,13 @@ class HomePage extends React.Component {
                 });
             }
         }
+        const productsInCart = JSON.parse(localStorage.getItem('cart'));
+        if (productsInCart && productsInCart.length) {
+            await this.setState({
+                productsInCart: productsInCart
+            });
+        }
+        console.log(this.state.productsInCart);
     }
 
     formCloseHandler = () => {
@@ -133,60 +142,78 @@ class HomePage extends React.Component {
         });
     }
 
+    addProductToLocalStorageHandler = async (product) => {
+        const productsInCart = [...this.state.productsInCart];
+        productsInCart.push(product);
+        await this.setState({
+            productsInCart: productsInCart
+        });
+        localStorage.setItem('cart', JSON.stringify(this.state.productsInCart));
+        console.log(JSON.parse(localStorage.getItem('cart')));
+    }
+
     render() {
         return (
             <React.Fragment>
-                <Spinner display={this.state.spinnerLoadingCounter !== 0 ? 'block' : 'none'} />
-                <Header
-                    isLogedIn={this.state.isLogedIn}
-                    registerButtonClicked={this.openRegisterFormHandler}
-                    logInButtonClicked={this.openLogInFormHandler}
-                    logOutButtonClicked={this.logOut}
-                    currentUserEmail={this.state.currentUser.email}
-                />
-                <ToastContainer autoClose={1500} />
+                <AppContext.Provider
+                    value={{
+                        productsInCart: this.state.productsInCart,
+                        amountOfProductsInCart: this.state.productsInCart.length,
+                        addProductToCartHandler: this.addProductToLocalStorageHandler
+                    }}
+                >
+                    <Spinner display={this.state.spinnerLoadingCounter !== 0 ? 'block' : 'none'} />
+                    <Header
+                        isLogedIn={this.state.isLogedIn}
+                        registerButtonClicked={this.openRegisterFormHandler}
+                        logInButtonClicked={this.openLogInFormHandler}
+                        logOutButtonClicked={this.logOut}
+                        currentUserEmail={this.state.currentUser.email}
+                    />
+                    <ToastContainer autoClose={1500} />
 
-                {/*above are common components*/}
+                    {/*above are common components*/}
 
-                <div className="container">
-                    <div className="row mt-5">
-                        <Switch>
-                            <Route path="/dashboard" component={Dashboard} />
-                            <Route
-                                path="/profile"
-                                render={() => <Profile
-                                    isLogedIn={this.state.isLogedIn}
-                                    userName={this.state.currentUser.name}
-                                    userEmail={this.state.currentUser.email}
-                                    userUpdated={(newUserInfo) => { this.updateUserInfo(newUserInfo) }}
-                                    history={this.props.history}
-                                />}
-                            />
-                            <Route path="/products" component={Products} />
-                            <Redirect from="/" to="/dashboard" />
-                        </Switch>
+                    <div className="container">
+                        <div className="row mt-5">
+                            <Switch>
+                                <Route path="/dashboard" component={Dashboard} />
+                                <Route
+                                    path="/profile"
+                                    render={() => <Profile
+                                        isLogedIn={this.state.isLogedIn}
+                                        userName={this.state.currentUser.name}
+                                        userEmail={this.state.currentUser.email}
+                                        userUpdated={(newUserInfo) => { this.updateUserInfo(newUserInfo) }}
+                                        history={this.props.history}
+                                    />}
+                                />
+                                <Route path="/products" component={Products} />
+                                <Redirect from="/" to="/dashboard" />
+                            </Switch>
+                        </div>
                     </div>
-                </div>
-                {
-                    this.state.modalOpen ?
-                        <Modal show={this.state.modalOpen} closeModal={this.formCloseHandler}>
-                            {
-                                this.state.typeOfForm === CommonConstants.FORM_TYPES.register ?
-                                    <RegisterForm changeForm={() => this.changeFormHandler(CommonConstants.FORM_TYPES.normalLogIn)} />
-                                    : this.state.typeOfForm === CommonConstants.FORM_TYPES.normalLogIn ?
-                                        <LogInForm
-                                            changeForm={() => this.changeFormHandler(CommonConstants.FORM_TYPES.register)}
-                                            logInNotify={this.notify}
-                                            closeModal={this.formCloseHandler}
-                                            token={this.storeToken}
-                                        />
-                                        : null
-                            }
-                        </Modal>
-                        : null
-                }
-                <Footer />
-            </React.Fragment>
+                    {
+                        this.state.modalOpen ?
+                            <Modal show={this.state.modalOpen} closeModal={this.formCloseHandler}>
+                                {
+                                    this.state.typeOfForm === CommonConstants.FORM_TYPES.register ?
+                                        <RegisterForm changeForm={() => this.changeFormHandler(CommonConstants.FORM_TYPES.normalLogIn)} />
+                                        : this.state.typeOfForm === CommonConstants.FORM_TYPES.normalLogIn ?
+                                            <LogInForm
+                                                changeForm={() => this.changeFormHandler(CommonConstants.FORM_TYPES.register)}
+                                                logInNotify={this.notify}
+                                                closeModal={this.formCloseHandler}
+                                                token={this.storeToken}
+                                            />
+                                            : null
+                                }
+                            </Modal>
+                            : null
+                    }
+                    <Footer />
+                </AppContext.Provider>
+            </React.Fragment >
         );
     }
 }

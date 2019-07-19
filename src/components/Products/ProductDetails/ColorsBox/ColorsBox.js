@@ -1,24 +1,35 @@
 import React from 'react';
 import classes from './ColorsBox.module.css';
 
-const colorsBox = (props) => {
-    let colorsBoxes = [];
-    if (props.colors) {
-        colorsBoxes = props.colors.map(color => {
-            return (
-                <div key={color} className={classes['color-box']} style={{backgroundColor: color}}>
-                </div>
-            );
-        });
+class ColorsBox extends React.Component {
+    pickColorHandler = (color) => {
+        this.props.onClick(color);
     }
-    return (
-        <div>
-            <label className={classes['label']}>Color</label>
-            <div className="d-flex justify-content-start">
-                {colorsBoxes}
+
+    render() {
+        let colorsBoxes = [];
+        if (this.props.colors) {
+            colorsBoxes = this.props.colors.map(color => {
+                const isChosen = this.props.chosenColor === color;
+                return (
+                    <div
+                        key={color}
+                        className={classes['color-box']}
+                        style={{ backgroundColor: color, border: isChosen ? 'solid 3px orangered' : ''}}
+                        onClick={() => this.pickColorHandler(color)}>
+                    </div>
+                );
+            });
+        }
+        return (
+            <div>
+                <label className={classes['label']}>Color</label>
+                <div className="d-flex justify-content-start">
+                    {colorsBoxes}
+                </div>
             </div>
-        </div>
-    );
+        );
+    }
 };
 
-export default colorsBox;
+export default ColorsBox;

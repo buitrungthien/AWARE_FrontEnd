@@ -53,3 +53,11 @@
     line-height: 1.33;
     color: #202124;
 }
+
+.outer-box {
+    margin-top: 28px;
+}
+
+.hr {
+    border-top: solid 1px;
+}
