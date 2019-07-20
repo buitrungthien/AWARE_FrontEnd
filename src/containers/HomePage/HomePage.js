@@ -13,6 +13,7 @@ import { Route, Switch, Redirect } from 'react-router-dom';
 import Dashboard from '../../components/Dashboard';
 import Footer from '../../components/Footer';
 import Products from '../../components/Products';
+import Cart from '../../components/Cart/Cart';
 
 export const AppContext = createContext();
 class HomePage extends React.Component {
@@ -144,6 +145,7 @@ class HomePage extends React.Component {
 
     addProductToLocalStorageHandler = async (product) => {
         const productsInCart = [...this.state.productsInCart];
+        product.amount = product.productPrice * product.chosenQuantity;
         productsInCart.push(product);
         await this.setState({
             productsInCart: productsInCart
@@ -152,12 +154,36 @@ class HomePage extends React.Component {
         console.log(JSON.parse(localStorage.getItem('cart')));
     }
 
+    decreaseQuantityOfProductInCart = (i) => {
+        if (this.state.productsInCart[i].chosenQuantity - 1 > 0) {
+            const productsInCart = [...this.state.productsInCart];
+            productsInCart[i].chosenQuantity = productsInCart[i].chosenQuantity - 1;
+            productsInCart[i].amount = productsInCart[i].chosenQuantity * productsInCart[i].productPrice;
+            this.setState({
+                productsInCart: productsInCart
+            });
+        }
+    }
+
+    increaseQuantityOfProductInCart = (i) => {
+        if (this.state.productsInCart[i].chosenQuantity + 1 <= this.state.productsInCart[i].productRemain) {
+            const productsInCart = [...this.state.productsInCart];
+            productsInCart[i].chosenQuantity = productsInCart[i].chosenQuantity + 1;
+            productsInCart[i].amount = productsInCart[i].chosenQuantity * productsInCart[i].productPrice;
+            this.setState({
+                productsInCart: productsInCart
+            });
+        }
+    }
+
     render() {
         return (
             <React.Fragment>
                 <AppContext.Provider
                     value={{
                         productsInCart: this.state.productsInCart,
+                        increaseQuantityOfProductInCart: this.increaseQuantityOfProductInCart,
+                        decreaseQuantityOfProductInCart: this.decreaseQuantityOfProductInCart,
                         amountOfProductsInCart: this.state.productsInCart.length,
                         addProductToCartHandler: this.addProductToLocalStorageHandler
                     }}
@@ -189,6 +215,7 @@ class HomePage extends React.Component {
                                     />}
                                 />
                                 <Route path="/products" component={Products} />
+                                <Route path="/cart" component={Cart} />
                                 <Redirect from="/" to="/dashboard" />
                             </Switch>
                         </div>

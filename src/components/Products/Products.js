@@ -171,15 +171,13 @@ class Products extends React.Component {
 
         return (
             <React.Fragment>
-                <React.Fragment>
-                    <div className="col-md-12">
-                        <span className={classes['category-text']}>{categoryText}</span>
-                    </div>
-                    <Switch>
-                        <Route path="/products/:id" component={ProductDetails} />
-                        <Route path="/products" render={() => allProducts} />
-                    </Switch>
-                </React.Fragment>
+                <div className="col-md-12">
+                    <span className={classes['category-text']}>{categoryText}</span>
+                </div>
+                <Switch>
+                    <Route path="/products/:id" component={ProductDetails} />
+                    <Route path="/products" render={() => allProducts} />
+                </Switch>
             </React.Fragment>
         );
     };

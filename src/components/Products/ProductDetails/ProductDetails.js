@@ -155,6 +155,7 @@ class ProductDetails extends React.Component {
                                                             productName: product.name,
                                                             productBrand: product.brand,
                                                             productPrice: product.price,
+                                                            productRemain: product.remain,
                                                             productID: product._id,
                                                             chosenSize: this.state.chosenSize,
                                                             chosenColor: this.state.chosenColor,

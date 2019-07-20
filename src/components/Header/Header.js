@@ -27,13 +27,10 @@ class Header extends React.Component {
             <AppContext.Consumer>
                 {
                     cartContext => {
+                        //eslint-disable-next-line
                         const miniCartItems = cartContext.productsInCart.map((product, i) => {
-                            return (
-                                <Link
-                                    to={{
-                                        pathname: `/products/${product.productID}`
-                                    }}
-                                >
+                            if (i < 3) {
+                                return (
                                     <div className={classes['cart-item']} key={i}>
                                         <div className={classes['cart-item-image-frame']}>
                                             <img className={classes['cart-item-image']} src={`http://localhost:5000/${product.productImage}`} alt="" />
@@ -44,11 +41,11 @@ class Header extends React.Component {
                                             <span className={classes['cart-item-text-price']}>${product.productPrice}</span>
                                             <span className={classes['cart-item-text-size-color-quantity']}>
                                                 {product.chosenSize}-{product.chosenColor}-{product.chosenQuantity}pcs
-                                                </span>
+                                                    </span>
                                         </div>
                                     </div>
-                                </Link>
-                            );
+                                );
+                            }
                         });
                         const minicart =
                             <React.Fragment>
@@ -89,7 +86,7 @@ class Header extends React.Component {
                                                     clicked={this.toggleMiniCartHandler}
                                                 />
                                             </span>
-                                            <div className={classes['mini-cart']} style={{display: this.state.minicartOpen ? 'block' : 'none'}}>
+                                            <div className={classes['mini-cart']} style={{ display: this.state.minicartOpen ? 'block' : 'none' }}>
                                                 {minicart}
                                             </div>
                                         </div>
