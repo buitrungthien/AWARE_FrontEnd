@@ -32,7 +32,7 @@ class HomePage extends React.Component {
         productsInCart: []
     }
 
-    async componentWillMount() {
+    async componentDidMount() {
         if (localStorage.getItem('token')) {
             this.setState((prevState, props) => {
                 return {
@@ -73,7 +73,6 @@ class HomePage extends React.Component {
                 productsInCart: productsInCart
             });
         }
-        console.log(this.state.productsInCart);
     }
 
     formCloseHandler = () => {
@@ -146,7 +145,7 @@ class HomePage extends React.Component {
     addProductToLocalStorageHandler = async (product) => {
         const productsInCart = [...this.state.productsInCart];
         product.amount = product.productPrice * product.chosenQuantity;
-        productsInCart.push(product);
+        productsInCart.unshift(product);
         await this.setState({
             productsInCart: productsInCart
         });
@@ -176,11 +175,51 @@ class HomePage extends React.Component {
         }
     }
 
+    createOrderHandler = async () => {
+        let productInCart = this.state.productsInCart[0];
+        while (productInCart) {
+            const {productID, productName, chosenColor, chosenSize, chosenQuantity, amount} = productInCart;
+            const orderedItem = {
+                productID,
+                productName,
+                chosenColor,
+                chosenSize,
+                chosenQuantity,
+                amount
+            };
+            const order = {
+                customerID: this.state.currentUser.id,
+                orderedItem: orderedItem,
+                status: 'pending'
+            };
+            const response = await axios.post('http://localhost:5000/api/orders', order, {
+                headers: {
+                    'x-auth-token': localStorage.getItem('token')
+                }
+            });
+            const productsInCart = [...this.state.productsInCart];
+            if (response.status === 200) {
+                this.notify(`Created order for ${productsInCart[0].productName}`, true);
+                productsInCart.splice(0, 1);
+                await this.setState({
+                    productsInCart: productsInCart
+                });
+                localStorage.setItem('cart', JSON.stringify(this.state.productsInCart));
+                productInCart = this.state.productsInCart[0];
+            } else {
+                this.notify(`Product ${productsInCart[0].productName} is not enough in the stock`, false);
+            }
+        }
+    }
+
     render() {
         return (
             <React.Fragment>
                 <AppContext.Provider
                     value={{
+                        isLogedIn: this.state.isLogedIn,
+                        createOrderHandler: this.createOrderHandler,
+                        openLogInFormHandler: this.openLogInFormHandler,
                         productsInCart: this.state.productsInCart,
                         increaseQuantityOfProductInCart: this.increaseQuantityOfProductInCart,
                         decreaseQuantityOfProductInCart: this.decreaseQuantityOfProductInCart,

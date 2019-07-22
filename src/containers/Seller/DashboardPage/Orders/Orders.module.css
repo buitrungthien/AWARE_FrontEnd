@@ -1,0 +1,80 @@
+.table-outer-box {
+    background-color: white;
+    padding: 14px 24px 24px 24px;
+    border-radius: 2px;
+    box-shadow: 0 10px 24px 0 rgba(0, 0, 0, 0.08);
+    margin-bottom: 26px;
+}
+
+.table-outer-box tr {
+    font-weight: 500;
+    line-height: 1.43;
+    color: #3d3d3f;
+}
+
+.table-outer-box th {
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.5;
+    color: #acacac;
+}
+
+.action-column {
+    cursor: pointer;
+}
+
+.status-outer-box {
+    width: 70px;
+    height: 20px;
+    border-radius: 12px;
+    font-size: 10px;
+    font-weight: 500;
+    line-height: 20px;
+    text-align: center;
+    color: white;
+}
+
+.status-outer-box::first-letter {
+    text-transform: uppercase;
+}
+
+.action-box {
+    padding: 16px;
+    width: 193px;
+    height: 88px;
+    border-radius: 2px;
+    box-shadow: 0 10px 10px 0 rgba(0, 0, 0, 0.08);
+    background-color: white;
+    position: absolute;
+    z-index: 50;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    display: none;
+    right: 0;
+}
+
+.green-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #82bf11;
+    margin-right: 10px;
+}
+
+.red-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #f05d62;
+    margin-right: 10px;
+}
+
+.action-column:hover .action-box {
+    display: flex;
+    color: #3d3d3f;
+}
+
+.action-column:hover {
+    color: #f05d62;
+}

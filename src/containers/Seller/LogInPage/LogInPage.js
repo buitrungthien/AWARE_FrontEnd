@@ -135,7 +135,7 @@ class LogInPage extends React.Component {
                             errorValidationMessage={formElement.config.errorValidationMessage}
                             changed={(event) => this.inputChangedHandler(event, formElement.id)} />
                     ))}
-                    <div style={{marginTop: '10px'}}>
+                    <div style={{marginTop: '10px', padding: "10px"}}>
                         <FlatButton backgroundColor='#ffa15f' disabled={!this.state.validForm}>Log in</FlatButton>
                     </div>
                 </form>
