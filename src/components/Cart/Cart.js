@@ -36,9 +36,19 @@ class Cart extends React.Component {
                                             {product.productName}
                                         </span>
                                         <span className={classes['cart-item-text-change-remove']}>
-                                            <span>Change </span>
-                                            |
-                                                <span> Remove</span>
+                                            <span
+                                                className={classes['pointer']}
+                                                onClick={() => cartContext.turnOnEditing(i)}
+                                            >
+                                                Change 
+                                            </span>
+                                            | 
+                                            <span
+                                                onClick={() => cartContext.removeProductToLocalStorageHandler(i)}
+                                                className={classes['pointer']}
+                                            >
+                                                Remove
+                                                </span>
                                         </span>
                                     </div>
                                 </div>
@@ -122,7 +132,7 @@ class Cart extends React.Component {
                                         <span className={classes['subtotal']}>${total}</span>
                                     </div>
                                 </div>
-                                <div style={{display: cartContext.amountOfProductsInCart > 0 ? 'block' : 'none'}}>
+                                <div style={{ display: cartContext.amountOfProductsInCart > 0 ? 'block' : 'none' }}>
                                     <FlatButton
                                         backgroundColor="#ff5f6d"
                                         clicked={cartContext.isLogedIn ? cartContext.createOrderHandler : cartContext.openLogInFormHandler}>

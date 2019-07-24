@@ -29,7 +29,9 @@ class HomePage extends React.Component {
             email: ''
         },
         isLogedIn: false,
-        productsInCart: []
+        productsInCart: [],
+        isEditting: false,
+        indexOfEdittingCartItem: -1
     }
 
     async componentDidMount() {
@@ -150,7 +152,46 @@ class HomePage extends React.Component {
             productsInCart: productsInCart
         });
         localStorage.setItem('cart', JSON.stringify(this.state.productsInCart));
+    }
+
+    removeProductToLocalStorageHandler = async (index) => {
+        const productsInCart = [...this.state.productsInCart];
+        productsInCart.splice(index, 1);
+        await this.setState({
+            productsInCart: productsInCart
+        });
+        localStorage.setItem('cart', JSON.stringify(this.state.productsInCart));
         console.log(JSON.parse(localStorage.getItem('cart')));
+    }
+
+    turnOnEditing = (index) => {
+        this.setState({
+            indexOfEdittingCartItem: index,
+            isEditting: true
+        });
+        const id = this.state.productsInCart[index].productID;
+        this.props.history.push(`/products/${id}`);
+    }
+
+    turnOffEditing = () => {
+        this.setState({
+            indexOfEdittingCartItem: -1,
+            isEditting: false
+        });
+    }
+
+    editProductToLocalStorageHandler = async (product) => {
+        const productsInCart = [...this.state.productsInCart];
+        product.amount = product.productPrice * product.chosenQuantity;
+        const { indexOfEdittingCartItem } = this.state;
+        productsInCart[indexOfEdittingCartItem] = product;
+        await this.setState({
+            productsInCart: productsInCart
+        });
+        localStorage.setItem('cart', JSON.stringify(this.state.productsInCart));
+        this.turnOffEditing();
+        this.notify("Cart item changed", true);
+        this.props.history.push('/cart');
     }
 
     decreaseQuantityOfProductInCart = (i) => {
@@ -178,7 +219,7 @@ class HomePage extends React.Component {
     createOrderHandler = async () => {
         let productInCart = this.state.productsInCart[0];
         while (productInCart) {
-            const {productID, productName, chosenColor, chosenSize, chosenQuantity, amount} = productInCart;
+            const { productID, productName, chosenColor, chosenSize, chosenQuantity, amount } = productInCart;
             const orderedItem = {
                 productID,
                 productName,
@@ -217,6 +258,12 @@ class HomePage extends React.Component {
             <React.Fragment>
                 <AppContext.Provider
                     value={{
+                        isEditting: this.state.isEditting,
+                        indexOfEdittingCartItem: this.state.indexOfEdittingCartItem,
+                        turnOnEditing: this.turnOnEditing,
+                        turnOffEditing: this.turnOffEditing,
+                        editProductToLocalStorageHandler: this.editProductToLocalStorageHandler,
+                        removeProductToLocalStorageHandler: this.removeProductToLocalStorageHandler,
                         isLogedIn: this.state.isLogedIn,
                         createOrderHandler: this.createOrderHandler,
                         openLogInFormHandler: this.openLogInFormHandler,

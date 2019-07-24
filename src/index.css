@@ -56,3 +56,21 @@ div.select__control div {
   width: 100%;
   height: 100%;
 }
+
+.page-item.active .page-link {
+  z-index: 1;
+  color: white!important;
+  background-color: orange!important;
+  border-color: orange!important;
+}
+
+div.btn-group {
+  border: solid 1px lightgray;
+  border-radius: 5px;
+  padding: 0;
+  margin-right: 10px;
+}
+
+td {
+  vertical-align: middle!important;
+}

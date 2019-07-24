@@ -149,21 +149,38 @@ class ProductDetails extends React.Component {
                                             <div className={classes['outer-box']}>
                                                 <FlatButton
                                                     backgroundColor="#5f6dff"
-                                                    clicked={() => {
-                                                        cartContext.addProductToCartHandler({
-                                                            productImage: product.images[0],
-                                                            productName: product.name,
-                                                            productBrand: product.brand,
-                                                            productPrice: product.price,
-                                                            productRemain: product.remain,
-                                                            productID: product._id,
-                                                            chosenSize: this.state.chosenSize,
-                                                            chosenColor: this.state.chosenColor,
-                                                            chosenQuantity: this.state.chosenQuantity
-                                                        })
-                                                    }}
+                                                    clicked={
+                                                        cartContext.isEditting && this.props.match.params.id === cartContext.productsInCart[cartContext.indexOfEdittingCartItem].productID?
+                                                            () => {
+                                                                cartContext.editProductToLocalStorageHandler({
+                                                                    productImage: product.images[0],
+                                                                    productName: product.name,
+                                                                    productBrand: product.brand,
+                                                                    productPrice: product.price,
+                                                                    productRemain: product.remain,
+                                                                    productID: product._id,
+                                                                    chosenSize: this.state.chosenSize,
+                                                                    chosenColor: this.state.chosenColor,
+                                                                    chosenQuantity: this.state.chosenQuantity
+                                                                })
+                                                            }
+                                                            :
+                                                            () => {
+                                                                cartContext.addProductToCartHandler({
+                                                                    productImage: product.images[0],
+                                                                    productName: product.name,
+                                                                    productBrand: product.brand,
+                                                                    productPrice: product.price,
+                                                                    productRemain: product.remain,
+                                                                    productID: product._id,
+                                                                    chosenSize: this.state.chosenSize,
+                                                                    chosenColor: this.state.chosenColor,
+                                                                    chosenQuantity: this.state.chosenQuantity
+                                                                })
+                                                            }
+                                                    }
                                                 >
-                                                    Add to cart
+                                                    {cartContext.isEditting && this.props.match.params.id === cartContext.productsInCart[cartContext.indexOfEdittingCartItem].productID ? 'Update' : 'Add to cart'}
                                                 </FlatButton>
                                             </div>
                                             <br />

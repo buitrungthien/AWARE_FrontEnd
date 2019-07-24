@@ -10,11 +10,35 @@ import Products from './Products';
 import Orders from './Orders';
 
 class DashboardPage extends React.Component {
+    state = {
+        title: <span className={classes['title-text']}>Products</span>
+    }
+
     componentDidMount() {
         if (!this.props.sellerIsLogedIn) {
             this.props.history.replace('/seller');
         }
-        this.props.history.push('/seller/dashboard/products');
+        if (this.props.match.url === "/seller" && this.props.history.location.pathname === "/seller/dashboard") {
+            this.props.history.replace('/seller/dashboard/products');
+        }
+        if (this.props.history.location.pathname === "/seller/dashboard/orders") {
+            this.setState({
+                title: <span className={classes['title-text']}>Orders</span>
+            });
+        }
+    }
+
+    componentWillReceiveProps() {
+        if (this.props.history.location.pathname === "/seller/dashboard/orders") {
+            this.setState({
+                title: <span className={classes['title-text']}>Orders</span>
+            });
+        }
+        if (this.props.history.location.pathname === "/seller/dashboard/products") {
+            this.setState({
+                title: <span className={classes['title-text']}>Products</span>
+            });
+        }
     }
 
     componentDidUpdate() {
@@ -23,8 +47,24 @@ class DashboardPage extends React.Component {
         }
     }
 
-    render() {
+    setTitleInProducts = (title) => {
+        if (title === "products") {
+            this.setState({
+                title: <span className={classes['title-text']}>Products</span>
+            });
+        } else {
+            this.setState({
+                title:
+                    <div className="d-flex justify-content-start flex-column">
+                        <span className={classes['title-text']}>Add product</span>
+                        <span>Products / Add product</span>
+                    </div>
+            });
+        }
+    }
 
+    render() {
+        const { title } = this.state;
         return (
             <div className="container-fluid" style={{ backgroundColor: "#f6f6f6" }}>
                 <div className="row">
@@ -40,14 +80,12 @@ class DashboardPage extends React.Component {
                         </div>
                     </div>
                     <div className="col-md-10">
-                        <h1>Header</h1>
-                        <br/>
-                        <hr/>
-                        <br/>
-                        <br/>
+                        <div className={classes['title']}>
+                            {title}
+                        </div>
                         <Switch>
-                            <Route path={this.props.match.url + '/dashboard/orders'} component={Orders}/>
-                            <Route path={this.props.match.url + '/dashboard/products'} component={Products}/>
+                            <Route path={this.props.match.url + '/dashboard/orders'} component={Orders} />
+                            <Route path={this.props.match.url + '/dashboard/products'} render={() => <Products setTitle={this.setTitleInProducts} />} />
                         </Switch>
                     </div>
                 </div>
