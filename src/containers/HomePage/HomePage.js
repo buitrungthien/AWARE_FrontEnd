@@ -41,11 +41,17 @@ class HomePage extends React.Component {
                     spinnerLoadingCounter: prevState.spinnerLoadingCounter + 1
                 }
             });
-            const response = await axios.get('http://localhost:5000/api/users/me', {
+            const res = axios.get('http://localhost:5000/api/users/me', {
                 headers: {
                     'x-auth-token': localStorage.getItem('token')
                 }
             });
+            this.setState((prevState, props) => {
+                return {
+                    spinnerLoadingCounter: prevState.spinnerLoadingCounter - 1
+                }
+            });
+            const response = await res;
             if (response) {
                 this.setState({
                     isLogedIn: true,
@@ -54,17 +60,6 @@ class HomePage extends React.Component {
                         isSeller: response.data.isSeller,
                         name: response.data.name,
                         email: response.data.email
-                    }
-                });
-                this.setState((prevState, props) => {
-                    return {
-                        spinnerLoadingCounter: prevState.spinnerLoadingCounter - 1
-                    }
-                });
-            } else {
-                this.setState((prevState, props) => {
-                    return {
-                        spinnerLoadingCounter: prevState.spinnerLoadingCounter - 1
                     }
                 });
             }
@@ -237,84 +232,84 @@ class HomePage extends React.Component {
         } else {
             this.notify(response.data, false);
         }
-}
+    }
 
-render() {
-    return (
-        <React.Fragment>
-            <AppContext.Provider
-                value={{
-                    isEditting: this.state.isEditting,
-                    indexOfEdittingCartItem: this.state.indexOfEdittingCartItem,
-                    turnOnEditing: this.turnOnEditing,
-                    turnOffEditing: this.turnOffEditing,
-                    editProductToLocalStorageHandler: this.editProductToLocalStorageHandler,
-                    removeProductToLocalStorageHandler: this.removeProductToLocalStorageHandler,
-                    isLogedIn: this.state.isLogedIn,
-                    createOrderHandler: this.createOrderHandler,
-                    openLogInFormHandler: this.openLogInFormHandler,
-                    productsInCart: this.state.productsInCart,
-                    increaseQuantityOfProductInCart: this.increaseQuantityOfProductInCart,
-                    decreaseQuantityOfProductInCart: this.decreaseQuantityOfProductInCart,
-                    amountOfProductsInCart: this.state.productsInCart.length,
-                    addProductToCartHandler: this.addProductToLocalStorageHandler
-                }}
-            >
-                <Spinner display={this.state.spinnerLoadingCounter !== 0 ? 'block' : 'none'} />
-                <Header
-                    isLogedIn={this.state.isLogedIn}
-                    registerButtonClicked={this.openRegisterFormHandler}
-                    logInButtonClicked={this.openLogInFormHandler}
-                    logOutButtonClicked={this.logOut}
-                    currentUserEmail={this.state.currentUser.email}
-                />
-                <ToastContainer autoClose={1500} />
+    render() {
+        return (
+            <React.Fragment>
+                <AppContext.Provider
+                    value={{
+                        isEditting: this.state.isEditting,
+                        indexOfEdittingCartItem: this.state.indexOfEdittingCartItem,
+                        turnOnEditing: this.turnOnEditing,
+                        turnOffEditing: this.turnOffEditing,
+                        editProductToLocalStorageHandler: this.editProductToLocalStorageHandler,
+                        removeProductToLocalStorageHandler: this.removeProductToLocalStorageHandler,
+                        isLogedIn: this.state.isLogedIn,
+                        createOrderHandler: this.createOrderHandler,
+                        openLogInFormHandler: this.openLogInFormHandler,
+                        productsInCart: this.state.productsInCart,
+                        increaseQuantityOfProductInCart: this.increaseQuantityOfProductInCart,
+                        decreaseQuantityOfProductInCart: this.decreaseQuantityOfProductInCart,
+                        amountOfProductsInCart: this.state.productsInCart.length,
+                        addProductToCartHandler: this.addProductToLocalStorageHandler
+                    }}
+                >
+                    <Spinner display={this.state.spinnerLoadingCounter !== 0 ? 'block' : 'none'} />
+                    <Header
+                        isLogedIn={this.state.isLogedIn}
+                        registerButtonClicked={this.openRegisterFormHandler}
+                        logInButtonClicked={this.openLogInFormHandler}
+                        logOutButtonClicked={this.logOut}
+                        currentUserEmail={this.state.currentUser.email}
+                    />
+                    <ToastContainer autoClose={1500} />
 
-                {/*above are common components*/}
+                    {/*above are common components*/}
 
-                <div className="container">
-                    <div className="row mt-5">
-                        <Switch>
-                            <Route path="/dashboard" component={Dashboard} />
-                            <Route
-                                path="/profile"
-                                render={() => <Profile
-                                    isLogedIn={this.state.isLogedIn}
-                                    userName={this.state.currentUser.name}
-                                    userEmail={this.state.currentUser.email}
-                                    userUpdated={(newUserInfo) => { this.updateUserInfo(newUserInfo) }}
-                                    history={this.props.history}
-                                />}
-                            />
-                            <Route path="/products" component={Products} />
-                            <Route path="/cart" component={Cart} />
-                            <Redirect from="/" to="/dashboard" />
-                        </Switch>
+                    <div className="container">
+                        <div className="row mt-5">
+                            <Switch>
+                                <Route path="/dashboard" component={Dashboard} />
+                                <Route
+                                    path="/profile"
+                                    render={() => <Profile
+                                        isLogedIn={this.state.isLogedIn}
+                                        userName={this.state.currentUser.name}
+                                        userEmail={this.state.currentUser.email}
+                                        userUpdated={(newUserInfo) => { this.updateUserInfo(newUserInfo) }}
+                                        history={this.props.history}
+                                    />}
+                                />
+                                <Route path="/products" component={Products} />
+                                <Route path="/cart" component={Cart} />
+                                <Redirect from="/" to="/dashboard" />
+                            </Switch>
+                        </div>
                     </div>
-                </div>
-                {
-                    this.state.modalOpen ?
-                        <Modal show={this.state.modalOpen} closeModal={this.formCloseHandler}>
-                            {
-                                this.state.typeOfForm === CommonConstants.FORM_TYPES.register ?
-                                    <RegisterForm changeForm={() => this.changeFormHandler(CommonConstants.FORM_TYPES.normalLogIn)} />
-                                    : this.state.typeOfForm === CommonConstants.FORM_TYPES.normalLogIn ?
-                                        <LogInForm
-                                            changeForm={() => this.changeFormHandler(CommonConstants.FORM_TYPES.register)}
-                                            logInNotify={this.notify}
-                                            closeModal={this.formCloseHandler}
-                                            token={this.storeToken}
-                                        />
-                                        : null
-                            }
-                        </Modal>
-                        : null
-                }
-                <Footer />
-            </AppContext.Provider>
-        </React.Fragment >
-    );
-}
+                    {
+                        this.state.modalOpen ?
+                            <Modal show={this.state.modalOpen} closeModal={this.formCloseHandler}>
+                                {
+                                    this.state.typeOfForm === CommonConstants.FORM_TYPES.register ?
+                                        <RegisterForm changeForm={() => this.changeFormHandler(CommonConstants.FORM_TYPES.normalLogIn)} />
+                                        : this.state.typeOfForm === CommonConstants.FORM_TYPES.normalLogIn ?
+                                            <LogInForm
+                                                changeForm={() => this.changeFormHandler(CommonConstants.FORM_TYPES.register)}
+                                                logInNotify={this.notify}
+                                                closeModal={this.formCloseHandler}
+                                                token={this.storeToken}
+                                            />
+                                            : null
+                                }
+                            </Modal>
+                            : null
+                    }
+                    <Footer />
+                </AppContext.Provider>
+            </React.Fragment >
+        );
+    }
 }
 
 export default HomePage;

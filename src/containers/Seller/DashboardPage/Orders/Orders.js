@@ -88,8 +88,25 @@ class Orders extends React.Component {
                 <tr key={order._id}>
                     <td>{order._id}</td>
                     <td>{order.orderedDate.toDateString()}</td>
-                    <td>{order.orderedItem.productName} ({order.orderedItem.chosenSize}) x {order.orderedItem.chosenQuantity}</td>
-                    <td>{order.orderedItem.amount}</td>
+                    <td>
+                        {
+                            order.orderedProducts.map(product => {
+                                return (
+                                    <span key={product._id}>
+                                        {`${product.productName} (${product.chosenSize}) x ${product.chosenQuantity}`}
+                                        <br></br>
+                                    </span>
+                                )
+                            })
+                        }
+                    </td>
+                    <td>
+                        {
+                            order.orderedProducts.reduce((acc, product) => {
+                                return acc + product.amount;
+                            }, 0)
+                        }
+                    </td>
                     <td>{status}</td>
                     <td
                         className={classes['action-column']}
@@ -138,7 +155,7 @@ class Orders extends React.Component {
                         {orderElements}
                     </tbody>
                 </Table>
-                <div className="d-flex justify-content-between align-items-baseline" style={{marginTop: "20px"}}>
+                <div className="d-flex justify-content-between align-items-baseline" style={{ marginTop: "20px" }}>
                     <span className={classes['amount-info']}>Show {(pageNumber - 1) * pageSize + 1} to {orders.length + (pageNumber - 1) * pageSize} of {numOfOrders} entries</span>
                     <div className={classes['pagination-wrapper']}>
                         <ButtonDropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
